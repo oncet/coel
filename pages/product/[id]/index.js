@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import prisma from "../../../lib/prisma";
 
@@ -40,6 +41,11 @@ const Product = ({ product }) => {
         <title>{product.name}</title>
       </Head>
       <h1>{product.name}</h1>
+      <div>
+        <Link href={`/product/${product.id}/edit`}>
+          <a>Edit</a>
+        </Link>
+      </div>
       <p>{product.description}</p>
     </>
   );
