@@ -11,16 +11,8 @@ export async function getStaticProps() {
 export default function Home({ products }) {
   return (
     <>
-      <h1 className="font-semibold text-2xl tracking-wide">Products</h1>
-      <ul className="list-inside list-disc ml-1 mt-1">
-        {products.map((product) => (
-          <li key={product.id}>
-            <Link href={`/product/${product.id.toString()}`}>
-              <a className="text-blue-600">{product.name}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <h1>Welcome!</h1>
+      <p>Welcome to the homepage.</p>
     </>
   );
 }
