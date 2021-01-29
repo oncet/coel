@@ -33,7 +33,12 @@ const Product = ({ product }) => {
   if (router.isFallback) {
     return <p>Loading...</p>;
   }
-  return <p>Product: {product.name}</p>;
+  return (
+    <>
+      <h1>{product.name}</h1>
+      <p>{product.description}</p>
+    </>
+  );
 };
 
 export default Product;
