@@ -11,12 +11,12 @@ export async function getStaticProps() {
 export default function Home({ products }) {
   return (
     <>
-      <h1>Products</h1>
-      <ul>
+      <h1 className="font-semibold text-2xl tracking-wide">Products</h1>
+      <ul className="list-inside list-disc ml-1 mt-1">
         {products.map((product) => (
           <li key={product.id}>
             <Link href={`/product/${product.id.toString()}`}>
-              <a>{product.name}</a>
+              <a className="text-blue-600">{product.name}</a>
             </Link>
           </li>
         ))}
