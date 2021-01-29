@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import prisma from "../../lib/prisma";
 
@@ -11,6 +12,9 @@ export async function getStaticProps() {
 export default function Home({ products }) {
   return (
     <>
+      <Head>
+        <title>Products</title>
+      </Head>
       <h1>Products</h1>
       <ul className="list-inside list-disc ml-1 mt-1">
         {products.map((product) => (
