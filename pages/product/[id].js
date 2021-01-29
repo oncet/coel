@@ -2,9 +2,7 @@ import { useRouter } from "next/router";
 import prisma from "../../lib/prisma";
 
 export async function getStaticPaths() {
-  const products = await prisma.product.findMany({
-    select: { id: true },
-  });
+  const products = await prisma.product.findMany();
 
   const paths = products.map(({ id }) => ({
     params: { id: id.toString() },
