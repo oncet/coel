@@ -51,7 +51,7 @@ const Edit = ({ product }) => {
   };
 
   const handleNameChange = (event) => {
-    setProduct({
+    setProductUpdate({
       ...productUpdate,
       name: event.target.value,
     });
