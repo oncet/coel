@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useState } from "react";
+import ky from "ky";
 import prisma from "../../../lib/prisma";
 
 export async function getStaticPaths() {
@@ -37,17 +38,23 @@ const Edit = ({ product }) => {
     return <p>Loading...</p>;
   }
 
-  const [name, setName] = useState(product.name);
+  const [productUpdate, setProductUpdate] = useState(product);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch("https://api.mocki.io/v1/b043df5a");
-    const json = await response.json();
-    console.log("json", json);
+
+    const response = await ky
+      .put(`http://localhost:3000/api/product/${product.id}`, {
+        json: productUpdate,
+      })
+      .json();
   };
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    setProduct({
+      ...productUpdate,
+      name: event.target.value,
+    });
   };
 
   return (
@@ -60,7 +67,7 @@ const Edit = ({ product }) => {
         <label className="block">Name</label>
         <input
           className="border w-full px-2 py-1"
-          value={name}
+          value={productUpdate.name}
           onChange={handleNameChange}
         />
         <button
