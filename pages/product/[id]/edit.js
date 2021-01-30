@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { useState } from "react";
 import prisma from "../../../lib/prisma";
 
@@ -51,6 +52,9 @@ const Edit = ({ product }) => {
 
   return (
     <>
+      <Head>
+        <title>Edit product</title>
+      </Head>
       <h1>Edit</h1>
       <form onSubmit={handleFormSubmit}>
         <label className="block">Name</label>
