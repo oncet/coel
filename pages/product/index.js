@@ -16,6 +16,11 @@ export default function Home({ products }) {
         <title>Products</title>
       </Head>
       <h1>Products</h1>
+      <div>
+        <Link href="/product/add">
+          <a className="btn">Create new product</a>
+        </Link>
+      </div>
       <ul className="list-inside list-disc ml-1 mt-1">
         {products.map((product) => (
           <li key={product.id}>
