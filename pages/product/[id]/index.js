@@ -43,7 +43,7 @@ const Product = ({ product }) => {
       <h1>{product.name}</h1>
       <div>
         <Link href={`/product/${product.id}/edit`}>
-          <a>Edit</a>
+          <a className="btn">Edit</a>
         </Link>
       </div>
       <p>{product.description}</p>

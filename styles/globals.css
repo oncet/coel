@@ -2,17 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+@layer base {
   h1 {
     @apply font-bold text-5xl tracking-wide mb-2;
   }
   p {
-    @apply pl-1;
+    @apply pl-1 my-1;
   }
   a {
     @apply text-blue-600;
   }
   nav > ul > li {
     @apply inline-block mr-2;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply border px-2 py-1 inline-block;
   }
 }
