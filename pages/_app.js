@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps, router }) {
         </ul>
       </nav>
       <motion.div
-        className="pt-1 pl-2"
+        className="py-1 px-2"
         key={router.route}
         initial="pageInitial"
         animate="pageAnimate"
