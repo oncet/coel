@@ -1,12 +1,4 @@
 import Head from "next/head";
-import prisma from "../lib/prisma";
-
-export async function getStaticProps() {
-  const products = await prisma.product.findMany();
-  return {
-    props: { products },
-  };
-}
 
 export default function Home({ products }) {
   return (
