@@ -38,13 +38,20 @@ const Edit = ({ product }) => {
     return <p>Loading...</p>;
   }
 
-  const [productUpdate, setProductUpdate] = useState(product);
+  const { id, name, slug, description, price } = product;
+
+  const [productUpdate, setProductUpdate] = useState({
+    name,
+    slug,
+    description,
+    price,
+  });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     const response = await ky
-      .put(`http://localhost:3000/api/product/${product.id}`, {
+      .put(`http://localhost:3000/api/product/${id}`, {
         json: productUpdate,
       })
       .json();
