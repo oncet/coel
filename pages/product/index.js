@@ -2,11 +2,10 @@ import Head from "next/head";
 import Link from "next/link";
 import prisma from "../../lib/prisma";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const products = await prisma.product.findMany();
   return {
     props: { products },
-    revalidate: 1,
   };
 }
 
