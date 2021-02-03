@@ -1,7 +1,8 @@
-import "../styles/globals.css";
-
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps, router }) {
   return (
@@ -36,6 +37,14 @@ function MyApp({ Component, pageProps, router }) {
       >
         <Component {...pageProps} />
       </motion.div>
+      <ToastContainer
+        position="bottom-center"
+        newestOnTop
+        hideProgressBar
+        closeButton={false}
+        limit="3"
+        autoClose="3500"
+      />
     </div>
   );
 }

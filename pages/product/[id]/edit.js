@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
 
@@ -50,11 +51,11 @@ const Edit = ({ product }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await ky
-      .put(`http://localhost:3000/api/product/${id}`, {
-        json: productUpdate,
-      })
-      .json();
+    await ky.put(`http://localhost:3000/api/product/${id}`, {
+      json: productUpdate,
+    });
+
+    toast.success("Product updated!");
   };
 
   const handleNameChange = (event) => {
