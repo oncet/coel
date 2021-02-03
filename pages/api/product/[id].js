@@ -7,7 +7,6 @@ const putHandler = async (req, res) => {
     data: req.body,
   });
   res.statusCode = 200;
-  res.end();
 };
 
 const methodHandlers = {
@@ -16,9 +15,9 @@ const methodHandlers = {
 
 export default async (req, res) => {
   if (methodHandlers.hasOwnProperty(req.method)) {
-    methodHandlers[req.method](req, res);
+    await methodHandlers[req.method](req, res);
   } else {
     res.statusCode = 404;
-    res.end();
   }
+  return res.end();
 };
