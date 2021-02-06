@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Formik } from "formik";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
 
@@ -41,28 +42,12 @@ const Edit = ({ product }) => {
 
   const { id, name, slug, description, price } = product;
 
-  const [productUpdate, setProductUpdate] = useState({
-    name,
-    slug,
-    description,
-    price,
-  });
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleFormSubmit = async (values, { setSubmiting }) => {
     await ky.put(`http://localhost:3000/api/product/${id}`, {
-      json: productUpdate,
+      json: values,
     });
 
     toast.success("Product updated!");
-  };
-
-  const handleNameChange = (event) => {
-    setProductUpdate({
-      ...productUpdate,
-      name: event.target.value,
-    });
   };
 
   return (
@@ -71,21 +56,29 @@ const Edit = ({ product }) => {
         <title>Edit product</title>
       </Head>
       <h1>Edit</h1>
-      <form onSubmit={handleFormSubmit}>
-        <label className="block">Name</label>
-        <input
-          className="border w-full px-2 py-1"
-          value={productUpdate.name}
-          onChange={handleNameChange}
-        />
-        <button
-          className="btn mt-2 w-full"
-          onClick={handleFormSubmit}
-          type="submit"
-        >
-          Save changes
-        </button>
-      </form>
+      <Formik
+        onSubmit={handleFormSubmit}
+        initialValues={{ name, slug, description, price }}
+      >
+        {({ values, isSubmitting, handleChange, handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <label className="block">Name</label>
+            <input
+              className="border w-full px-2 py-1"
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+            />
+            <button
+              className="btn mt-2 w-full disabled:opacity-50"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving changes..." : "Save changes"}
+            </button>
+          </form>
+        )}
+      </Formik>
     </>
   );
 };
