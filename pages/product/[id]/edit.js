@@ -7,20 +7,7 @@ import Head from "next/head";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
 
-export async function getStaticPaths() {
-  const products = await prisma.product.findMany();
-
-  const paths = products.map(({ id }) => ({
-    params: { id: id.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const product = await prisma.product.findUnique({
     where: {
       id: Number(params.id),
