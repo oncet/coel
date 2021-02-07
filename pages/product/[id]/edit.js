@@ -1,8 +1,9 @@
-import { useRouter } from "next/router";
-import Head from "next/head";
-import { useState } from "react";
+import { Formik, Field } from "formik";
 import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import * as Yup from "yup";
+import Head from "next/head";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
 
@@ -59,20 +60,65 @@ const Edit = ({ product }) => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={{ name, slug, description, price }}
+        validationSchema={Yup.object().shape({
+          name: Yup.string().required(),
+          slug: Yup.string().required(),
+          price: Yup.number().required(),
+        })}
       >
-        {({ values, isSubmitting, handleChange, handleSubmit }) => (
+        {({
+          errors,
+          handleChange,
+          handleSubmit,
+          isSubmitting,
+          touched,
+          values,
+        }) => (
           <form onSubmit={handleSubmit}>
-            <label className="block">Name</label>
-            <input
+            <label className="block" htmlFor="name">
+              Name
+            </label>
+            <Field
               className="border w-full px-2 py-1"
+              id="name"
               name="name"
-              value={values.name}
-              onChange={handleChange}
+              required
+            />
+            {!!(errors.name && touched.name) && <div>{errors.name}</div>}
+            <label className="block mt-2" htmlFor="slug">
+              Slug
+            </label>
+            <Field
+              className="border w-full px-2 py-1"
+              id="slug"
+              name="slug"
+              required
+            />
+            {!!(errors.slug && touched.slug) && <div>{errors.slug}</div>}
+            <label className="block mt-2" htmlFor="price">
+              Price
+            </label>
+            <Field
+              className="border w-full px-2 py-1"
+              id="price"
+              name="price"
+              required
+              type="number"
+            />
+            {!!(errors.price && touched.price) && <div>{errors.price}</div>}
+            <label className="block mt-2" htmlFor="description">
+              Description
+            </label>
+            <Field
+              as="textarea"
+              className="border w-full px-2 py-1"
+              id="description"
+              name="description"
             />
             <button
               className="btn mt-2 w-full disabled:opacity-50"
-              type="submit"
               disabled={isSubmitting}
+              type="submit"
             >
               {isSubmitting ? "Saving changes..." : "Save changes"}
             </button>
