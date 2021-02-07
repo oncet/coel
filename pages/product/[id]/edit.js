@@ -50,7 +50,7 @@ const Edit = ({ product }) => {
         validationSchema={Yup.object().shape({
           name: Yup.string().required(),
           slug: Yup.string().required(),
-          price: Yup.number().required(),
+          price: Yup.number().positive().required(),
         })}
       >
         {({
