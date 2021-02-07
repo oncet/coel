@@ -3,7 +3,13 @@ import Link from "next/link";
 import prisma from "../../lib/prisma";
 
 export async function getServerSideProps() {
-  const products = await prisma.product.findMany();
+  const products = await prisma.product.findMany({
+    orderBy: [
+      {
+        id: "desc",
+      },
+    ],
+  });
   return {
     props: { products },
   };
