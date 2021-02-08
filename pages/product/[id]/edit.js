@@ -1,4 +1,4 @@
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
+import Field from "../../../components/field";
 
 export async function getServerSideProps({ params }) {
   const product = await prisma.product.findUnique({
@@ -64,45 +65,34 @@ const Edit = ({ product }) => {
           values,
         }) => (
           <form onSubmit={handleSubmit}>
-            <label className="block" htmlFor="name">
-              Name
-            </label>
             <Field
-              className="border w-full px-2 py-1"
-              id="name"
+              label="Name"
               name="name"
+              errors={errors.name}
+              touched={touched.name}
               required
             />
-            {!!(errors.name && touched.name) && <div>{errors.name}</div>}
-            <label className="block mt-2" htmlFor="slug">
-              Slug
-            </label>
             <Field
-              className="border w-full px-2 py-1"
-              id="slug"
+              label="Slug"
               name="slug"
+              errors={errors.slug}
+              touched={touched.slug}
               required
             />
-            {!!(errors.slug && touched.slug) && <div>{errors.slug}</div>}
-            <label className="block mt-2" htmlFor="price">
-              Price
-            </label>
             <Field
-              className="border w-full px-2 py-1"
-              id="price"
+              label="Price"
               name="price"
-              required
+              errors={errors.price}
+              touched={touched.price}
               type="number"
+              required
             />
-            {!!(errors.price && touched.price) && <div>{errors.price}</div>}
-            <label className="block mt-2" htmlFor="description">
-              Description
-            </label>
             <Field
-              as="textarea"
-              className="border w-full px-2 py-1"
-              id="description"
+              label="Description"
               name="description"
+              errors={errors.description}
+              touched={touched.description}
+              as="textarea"
             />
             <button
               className="btn mt-2 w-full disabled:opacity-50"
