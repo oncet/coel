@@ -38,6 +38,12 @@ const Edit = ({ product }) => {
     toast.success("Product updated!");
   };
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required(),
+    slug: Yup.string().required(),
+    price: Yup.number().positive().required(),
+  });
+
   return (
     <>
       <Head>
@@ -47,11 +53,7 @@ const Edit = ({ product }) => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={{ name, slug, description, price }}
-        validationSchema={Yup.object().shape({
-          name: Yup.string().required(),
-          slug: Yup.string().required(),
-          price: Yup.number().positive().required(),
-        })}
+        validationSchema={validationSchema}
       >
         {({
           errors,
