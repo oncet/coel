@@ -7,7 +7,7 @@ export default function Field({ label, name, errors, touched, ...rest }) {
         {label}
       </label>
       <FormikField
-        className="border w-full px-2 py-1 mb-2"
+        className="border w-full px-2 py-1 mb-2 text-black"
         id={name}
         name={name}
         {...rest}

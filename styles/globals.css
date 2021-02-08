@@ -10,7 +10,7 @@
     @apply pl-1 my-1;
   }
   a {
-    @apply text-blue-600;
+    @apply text-blue-600 dark:text-white;
   }
   nav > ul > li {
     @apply inline-block mr-2;
