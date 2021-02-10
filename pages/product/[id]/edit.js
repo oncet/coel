@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
+import BlockField from "../../../components/block-field";
 import Field from "../../../components/field";
 
 export async function getServerSideProps({ params }) {
@@ -29,7 +30,7 @@ const Edit = ({ product }) => {
     return <p>Loading...</p>;
   }
 
-  const { id, name, slug, description, price } = product;
+  const { id, name, slug, description, price, isPublic } = product;
 
   const handleFormSubmit = async (values, { setSubmiting }) => {
     await ky.put(`http://localhost:3000/api/product/${id}`, {
@@ -53,7 +54,7 @@ const Edit = ({ product }) => {
       <h1>Edit</h1>
       <Formik
         onSubmit={handleFormSubmit}
-        initialValues={{ name, slug, description, price }}
+        initialValues={{ name, slug, description, price, isPublic }}
         validationSchema={validationSchema}
       >
         {({
@@ -65,21 +66,23 @@ const Edit = ({ product }) => {
           values,
         }) => (
           <form onSubmit={handleSubmit}>
-            <Field
+            <BlockField
               label="Name"
               name="name"
               errors={errors.name}
               touched={touched.name}
+              type="text"
               required
             />
-            <Field
+            <BlockField
               label="Slug"
               name="slug"
               errors={errors.slug}
               touched={touched.slug}
+              type="text"
               required
             />
-            <Field
+            <BlockField
               label="Price"
               name="price"
               errors={errors.price}
@@ -87,7 +90,7 @@ const Edit = ({ product }) => {
               type="number"
               required
             />
-            <Field
+            <BlockField
               label="Description"
               name="description"
               errors={errors.description}
