@@ -97,6 +97,13 @@ const Edit = ({ product }) => {
               touched={touched.description}
               as="textarea"
             />
+            <Field
+              label="Public"
+              name="isPublic"
+              errors={errors.isPublic}
+              touched={touched.isPublic}
+              type="checkbox"
+            />
             <button
               className="btn mt-2 w-full disabled:opacity-50"
               disabled={isSubmitting}

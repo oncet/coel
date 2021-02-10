@@ -5,6 +5,7 @@ CREATE TABLE "Product" (
     "slug" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" INTEGER,
+    "isPublic" BOOLEAN NOT NULL,
 
     PRIMARY KEY ("id")
 );
