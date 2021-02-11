@@ -16,9 +16,3 @@
     @apply inline-block mr-2;
   }
 }
-
-@layer components {
-  .btn {
-    @apply border px-2 py-1 inline-block;
-  }
-}
