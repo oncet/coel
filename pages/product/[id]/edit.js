@@ -1,13 +1,13 @@
 import { Formik } from "formik";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
 import BlockField from "../../../components/block-field";
 import Field from "../../../components/field";
+import Button from "../../../components/button";
 
 export async function getServerSideProps({ params }) {
   const product = await prisma.product.findUnique({
@@ -103,14 +103,11 @@ const Edit = ({ product }) => {
               errors={errors.isPublic}
               touched={touched.isPublic}
               type="checkbox"
+              className="p-3 rounded"
             />
-            <button
-              className="btn mt-2 w-full disabled:opacity-50"
-              disabled={isSubmitting}
-              type="submit"
-            >
+            <Button disabled={isSubmitting}>
               {isSubmitting ? "Saving changes..." : "Save changes"}
-            </button>
+            </Button>
           </form>
         )}
       </Formik>
