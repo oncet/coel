@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import PencilIcon from "../../../components/icons/pencil";
 import prisma from "../../../lib/prisma";
 
 export async function getServerSideProps({ params }) {
@@ -28,11 +29,12 @@ const Product = ({ product }) => {
         <title>{product.name}</title>
       </Head>
       <h1>{product.name}</h1>
-      <div>
-        <Link href={`/product/${product.id}/edit`}>
-          <a className="btn">Edit</a>
-        </Link>
-      </div>
+      <Link href={`/product/${product.id}/edit`}>
+        <a className="flex mb-3">
+          <PencilIcon />
+          Edit
+        </a>
+      </Link>
       <p>{product.description}</p>
     </>
   );
