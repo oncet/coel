@@ -7,7 +7,7 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps, router }) {
   return (
     <div className="container mx-auto">
-      <nav className="border-b p-1">
+      <nav className="border-b border-gray-300 dark:border-gray-700 p-1">
         <ul>
           <li>
             <Link href="/">
