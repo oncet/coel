@@ -7,7 +7,7 @@ export default function BlockField({ label, name, errors, touched, ...rest }) {
         {label}
       </label>
       <FormikField
-        className="border border-gray-400 rounded w-full block mb-2 text-black"
+        className="border border-gray-400 rounded w-full block mb-2.5 text-black"
         id={name}
         name={name}
         {...rest}

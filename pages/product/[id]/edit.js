@@ -105,7 +105,7 @@ const Edit = ({ product }) => {
               type="checkbox"
               className="p-3 rounded"
             />
-            <Button disabled={isSubmitting}>
+            <Button className="mt-3" disabled={isSubmitting}>
               {isSubmitting ? "Saving changes..." : "Save changes"}
             </Button>
           </form>
