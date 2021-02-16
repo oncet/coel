@@ -22,8 +22,8 @@ function MyApp({ Component, pageProps, router }) {
               </Link>
             </li>
             <li>
-              <Link href="/options">
-                <a>Options</a>
+              <Link href="/settings">
+                <a>Settings</a>
               </Link>
             </li>
           </ul>

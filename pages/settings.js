@@ -6,7 +6,7 @@ import Field from "../components/field";
 import Button from "../components/button";
 import { useTheme } from "../context/theme";
 
-const Options = () => {
+const Settings = () => {
   const { darkMode, setDarkMode } = useTheme();
 
   const handleFormSubmit = async (values, { setSubmiting }) => {
@@ -20,7 +20,7 @@ const Options = () => {
 
     setDarkMode(values.darkMode);
 
-    toast.success("Options updated!");
+    toast.success("Settings updated!");
   };
 
   const validationSchema = Yup.object().shape({
@@ -30,9 +30,9 @@ const Options = () => {
   return (
     <>
       <Head>
-        <title>Options</title>
+        <title>Settings</title>
       </Head>
-      <h1>Options</h1>
+      <h1>Settings</h1>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={{ darkMode }}
@@ -65,4 +65,4 @@ const Options = () => {
   );
 };
 
-export default Options;
+export default Settings;
