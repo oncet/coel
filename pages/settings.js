@@ -5,21 +5,15 @@ import Head from "next/head";
 import Field from "../components/field";
 import Button from "../components/button";
 import { useTheme } from "../context/theme";
+import { toggleDarkClass } from "../lib/toggleDarkClass";
 
 const Settings = () => {
   const { darkMode, setDarkMode } = useTheme();
 
-  const handleFormSubmit = async (values, { setSubmiting }) => {
-    const root = document.documentElement;
-
-    if (values.darkMode) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-
+  const handleFormSubmit = async (values) => {
+    toggleDarkClass(values.darkMode);
     setDarkMode(values.darkMode);
-
+    localStorage.setItem("darkMode", Number(values.darkMode));
     toast.success("Settings updated!");
   };
 
@@ -37,6 +31,7 @@ const Settings = () => {
         onSubmit={handleFormSubmit}
         initialValues={{ darkMode }}
         validationSchema={validationSchema}
+        enableReinitialize
       >
         {({
           errors,
