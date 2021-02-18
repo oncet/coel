@@ -2,18 +2,15 @@ import { Formik } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import Head from "next/head";
+import { useTheme } from "next-themes";
 import Field from "../components/field";
 import Button from "../components/button";
-import { useTheme } from "../context/theme";
-import { toggleDarkClass } from "../lib/toggleDarkClass";
 
 const Settings = () => {
-  const { darkMode, setDarkMode } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const handleFormSubmit = async (values) => {
-    toggleDarkClass(values.darkMode);
-    setDarkMode(values.darkMode);
-    localStorage.setItem("darkMode", Number(values.darkMode));
+    setTheme(values.darkMode ? "dark" : "light");
     toast.success("Settings updated!");
   };
 
@@ -29,7 +26,7 @@ const Settings = () => {
       <h1>Settings</h1>
       <Formik
         onSubmit={handleFormSubmit}
-        initialValues={{ darkMode }}
+        initialValues={{ darkMode: theme === "dark" ? true : false }}
         validationSchema={validationSchema}
         enableReinitialize
       >
