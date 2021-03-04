@@ -1,8 +1,10 @@
-import { Formik } from "formik";
-import { toast } from "react-toastify";
-import * as Yup from "yup";
 import Head from "next/head";
 import { useTheme } from "next-themes";
+import { Formik } from "formik";
+import { toast } from "react-toastify";
+import { FormattedMessage } from "react-intl";
+import * as Yup from "yup";
+
 import Field from "../components/field";
 import Button from "../components/button";
 
@@ -23,7 +25,12 @@ const Settings = () => {
       <Head>
         <title>Settings</title>
       </Head>
-      <h1>Settings</h1>
+      <h1>
+        <FormattedMessage
+          defaultMessage="Settings"
+          description="settings page header"
+        />
+      </h1>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={{ darkMode: theme === "dark" ? true : false }}

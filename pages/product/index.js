@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
+import { FormattedMessage } from "react-intl";
+
 import PlusIcon from "../../components/icons/plus";
 import prisma from "../../lib/prisma";
 
@@ -22,11 +24,19 @@ export default function Home({ products }) {
       <Head>
         <title>Products</title>
       </Head>
-      <h1>Products</h1>
+      <h1>
+        <FormattedMessage
+          defaultMessage="Products"
+          description="products header"
+        />
+      </h1>
       <Link href="/product/add">
         <a className="flex mb-3">
           <PlusIcon />
-          New product
+          <FormattedMessage
+            defaultMessage="New product"
+            description="new product link"
+          />
         </a>
       </Link>
       <ul className="list-inside list-disc ml-1 mt-1">
