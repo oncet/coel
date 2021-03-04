@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "formatjs:extract": "formatjs extract '(components||pages)/**/*.js' --out-file lang/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
+    "formatjs:compile": "formatjs compile-folder --ast lang compiled-lang"
   },
   "dependencies": {
     "@prisma/client": "^2.15.0",
@@ -18,13 +20,16 @@
     "next-themes": "0.0.10",
     "next-transpile-modules": "^6.1.0",
     "postcss": "^8.2.4",
-    "react": "17.0.1",
+    "react": "^17.0.1",
     "react-dom": "17.0.1",
+    "react-intl": "^5.13.2",
     "react-toastify": "^7.0.3",
     "tailwindcss": "^2.0.2",
     "yup": "^0.32.8"
   },
   "devDependencies": {
-    "@prisma/cli": "^2.15.0"
+    "@formatjs/cli": "^3.1.6",
+    "@prisma/cli": "^2.15.0",
+    "babel-plugin-formatjs": "^9.2.2"
   }
 }
