@@ -37,14 +37,7 @@ const Settings = () => {
         validationSchema={validationSchema}
         enableReinitialize
       >
-        {({
-          errors,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-          touched,
-          values,
-        }) => (
+        {({ errors, handleSubmit, isSubmitting, touched }) => (
           <form onSubmit={handleSubmit}>
             <Field
               label="Dark mode"

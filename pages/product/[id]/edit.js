@@ -57,14 +57,7 @@ const Edit = ({ product }) => {
         initialValues={{ name, slug, description, price, isPublic }}
         validationSchema={validationSchema}
       >
-        {({
-          errors,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-          touched,
-          values,
-        }) => (
+        {({ errors, handleSubmit, isSubmitting, touched }) => (
           <form onSubmit={handleSubmit}>
             <BlockField
               label="Name"
