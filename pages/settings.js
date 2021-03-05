@@ -40,6 +40,15 @@ const Settings = () => {
         {({ errors, handleSubmit, isSubmitting, touched }) => (
           <form onSubmit={handleSubmit}>
             <Field
+              label="Foo"
+              name="foo"
+              as="select"
+              className="w-16 rounded text-black"
+            >
+              <option>1</option>
+              <option>2</option>
+            </Field>
+            <Field
               label="Dark mode"
               name="darkMode"
               errors={errors.darkMode}
@@ -47,7 +56,7 @@ const Settings = () => {
               type="checkbox"
               className="p-3 rounded"
             />
-            <Button className="mt-3" disabled={isSubmitting}>
+            <Button disabled={isSubmitting}>
               {isSubmitting ? "Saving changes..." : "Save changes"}
             </Button>
           </form>
