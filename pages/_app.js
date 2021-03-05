@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps, router }) {
         <div className="container mx-auto">
           <motion.div
             className="py-1 px-2"
-            key={route}
+            key={`${route}-${locale}`}
             initial="pageInitial"
             animate="pageAnimate"
             variants={{
@@ -56,14 +56,5 @@ function MyApp({ Component, pageProps, router }) {
     </ThemeProvider>
   );
 }
-
-// const Wrapped = (props) => {
-//   console.log("Wrapped rendering");
-//   return (
-//     <ThemeWrapper>
-//       <MyApp {...props} />
-//     </ThemeWrapper>
-//   );
-// };
 
 export default MyApp;
