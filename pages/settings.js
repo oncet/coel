@@ -39,7 +39,7 @@ const Settings = () => {
       >
         {({ errors, handleSubmit, isSubmitting, touched }) => (
           <form onSubmit={handleSubmit}>
-            <Field
+            {/* <Field
               label="Foo"
               name="foo"
               as="select"
@@ -47,7 +47,7 @@ const Settings = () => {
             >
               <option>1</option>
               <option>2</option>
-            </Field>
+            </Field> */}
             <Field
               label="Dark mode"
               name="darkMode"
