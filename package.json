@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@formatjs/cli": "^3.1.6",
-    "@prisma/cli": "^2.18.0",
-    "babel-plugin-formatjs": "^9.2.2"
+    "babel-plugin-formatjs": "^9.2.2",
+    "prisma": "^2.18.0"
   }
 }
