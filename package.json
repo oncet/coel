@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "formatjs:extract": "formatjs extract '(components||pages)/**/*.js' --out-file lang/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
-    "formatjs:compile": "formatjs compile-folder --ast lang compiled-lang"
+    "lang:extract": "formatjs extract '(components||pages)/**/*.js' --out-file lang/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
+    "lang:compile": "formatjs compile-folder --ast lang compiled-lang",
+    "db:migrate:dev": "prisma migrate dev --preview-feature"
   },
   "dependencies": {
     "@prisma/client": "^2.18.0",
