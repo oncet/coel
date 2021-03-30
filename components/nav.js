@@ -1,11 +1,25 @@
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import clsx from "clsx";
 
 import CogIcon from "./icons/cog";
 import TranslateIcon from "./icons/translate";
 
+const languages = [
+  {
+    locale: "en",
+    label: "English",
+  },
+  {
+    locale: "es",
+    label: "Español",
+  },
+];
+
 export default function Nav({ asPath }) {
+  const { locale: currentLocale } = useRouter();
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   useEffect(() => {
@@ -52,17 +66,20 @@ export default function Nav({ asPath }) {
             <TranslateIcon />
           </button>
           {dropdownVisible && (
-            <ul className="rounded shadow bg-white dark:bg-gray-700 top-5 right-0 py-2 px-4 absolute">
-              <li>
-                <Link href={asPath} locale="en">
-                  <a>English</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={asPath} locale="es">
-                  <a>Español</a>
-                </Link>
-              </li>
+            <ul className="flex flex-col space-y-2 rounded shadow bg-gray-100 dark:bg-gray-700 top-5 right-0 p-2 absolute">
+              {languages.map(({ locale, label }) => (
+                <li
+                  className={clsx(
+                    currentLocale === locale &&
+                      "bg-gray-200 dark:bg-gray-500 py-1 px-4",
+                    "text-center rounded"
+                  )}
+                >
+                  <Link href={asPath} locale={locale}>
+                    <a>{label}</a>
+                  </Link>
+                </li>
+              ))}
             </ul>
           )}
         </li>
