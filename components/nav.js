@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import clsx from "clsx";
+import { motion, AnimatePresence } from "framer-motion";
 
 import CogIcon from "./icons/cog";
 import TranslateIcon from "./icons/translate";
@@ -65,20 +66,34 @@ export default function Nav({ asPath }) {
           <button onClick={() => setDropdownVisible(true)}>
             <TranslateIcon />
           </button>
-          <ul className="flex flex-col space-y-2 rounded shadow bg-gray-100 dark:bg-gray-700 top-5 right-0 p-2 absolute">
-            {languages.map(({ locale, label }) => (
-              <li
+          <AnimatePresence>
+            {dropdownVisible && (
+              <motion.ul
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.1 }}
                 className={clsx(
-                  currentLocale === locale && "bg-gray-200 dark:bg-gray-500",
-                  "text-center rounded py-1 px-4"
+                  "z-50 flex flex-col space-y-2 rounded shadow bg-gray-100 dark:bg-gray-700 top-5 right-0 p-2 absolute"
                 )}
               >
-                <Link href={asPath} locale={locale}>
-                  <a>{label}</a>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                {languages.map(({ locale, label }) => (
+                  <li
+                    key={locale}
+                    className={clsx(
+                      currentLocale === locale &&
+                        "bg-gray-200 dark:bg-gray-500",
+                      "text-center rounded py-1 px-4"
+                    )}
+                  >
+                    <Link href={asPath} locale={locale}>
+                      <a>{label}</a>
+                    </Link>
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
         </li>
         <li>
           <Link href="/settings">
