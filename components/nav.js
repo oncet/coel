@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import CogIcon from "./icons/cog";
@@ -7,6 +7,20 @@ import TranslateIcon from "./icons/translate";
 
 export default function Nav({ asPath }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  useEffect(() => {
+    const listener = () => {
+      setDropdownVisible(false);
+    };
+
+    if (dropdownVisible) {
+      window.addEventListener("click", listener);
+    }
+
+    return () => {
+      window.removeEventListener("click", listener);
+    };
+  }, [dropdownVisible]);
 
   return (
     <nav className="flex justify-between border-b border-gray-300 dark:border-gray-700 py-1">
@@ -34,7 +48,7 @@ export default function Nav({ asPath }) {
       </ul>
       <ul className="flex items-center">
         <li className="relative flex">
-          <button onClick={() => setDropdownVisible(!dropdownVisible)}>
+          <button onClick={() => setDropdownVisible(true)}>
             <TranslateIcon />
           </button>
           {dropdownVisible && (
