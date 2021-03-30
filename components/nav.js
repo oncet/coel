@@ -65,23 +65,20 @@ export default function Nav({ asPath }) {
           <button onClick={() => setDropdownVisible(true)}>
             <TranslateIcon />
           </button>
-          {dropdownVisible && (
-            <ul className="flex flex-col space-y-2 rounded shadow bg-gray-100 dark:bg-gray-700 top-5 right-0 p-2 absolute">
-              {languages.map(({ locale, label }) => (
-                <li
-                  className={clsx(
-                    currentLocale === locale &&
-                      "bg-gray-200 dark:bg-gray-500 py-1 px-4",
-                    "text-center rounded"
-                  )}
-                >
-                  <Link href={asPath} locale={locale}>
-                    <a>{label}</a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul className="flex flex-col space-y-2 rounded shadow bg-gray-100 dark:bg-gray-700 top-5 right-0 p-2 absolute">
+            {languages.map(({ locale, label }) => (
+              <li
+                className={clsx(
+                  currentLocale === locale && "bg-gray-200 dark:bg-gray-500",
+                  "text-center rounded py-1 px-4"
+                )}
+              >
+                <Link href={asPath} locale={locale}>
+                  <a>{label}</a>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </li>
         <li>
           <Link href="/settings">
