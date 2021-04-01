@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import clsx from "clsx";
+import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 
-import CogIcon from "./icons/cog";
 import TranslateIcon from "./icons/translate";
+import MoonIcon from "./icons/moon";
+import SunIcon from "./icons/sun";
 
 const languages = [
   {
@@ -22,6 +24,7 @@ const languages = [
 export default function Nav({ asPath }) {
   const { locale: currentLocale } = useRouter();
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const listener = () => {
@@ -36,6 +39,10 @@ export default function Nav({ asPath }) {
       window.removeEventListener("click", listener);
     };
   }, [dropdownVisible]);
+
+  const handleThemeToggle = async (values) => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   return (
     <nav className="flex justify-between border-b border-gray-300 dark:border-gray-700 py-1">
@@ -93,12 +100,10 @@ export default function Nav({ asPath }) {
             )}
           </AnimatePresence>
         </li>
-        <li>
-          <Link href="/settings">
-            <a>
-              <CogIcon />
-            </a>
-          </Link>
+        <li className="flex">
+          <button onClick={handleThemeToggle}>
+            {theme === "light" ? <SunIcon /> : <MoonIcon />}
+          </button>
         </li>
       </ul>
     </nav>
