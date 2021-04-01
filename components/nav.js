@@ -73,9 +73,7 @@ export default function Nav({ asPath }) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.1 }}
-                className={clsx(
-                  "z-50 flex flex-col space-y-2 rounded shadow bg-gray-100 dark:bg-gray-700 top-5 right-0 p-2 absolute"
-                )}
+                className="z-50 flex flex-col space-y-2 rounded shadow bg-gray-100 dark:bg-gray-700 top-5 right-0 p-2 absolute"
               >
                 {languages.map(({ locale, label }) => (
                   <li
