@@ -31,7 +31,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@formatjs/cli": "^3.1.6",
+    "@formatjs/cli": "^4.2.4",
     "babel-plugin-formatjs": "^9.2.2",
     "prisma": "^2.18.0"
   }
