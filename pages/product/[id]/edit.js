@@ -32,10 +32,23 @@ const Edit = ({ product }) => {
 
   const { id, name, slug, description, price, isPublic } = product;
 
-  const handleFormSubmit = async (values, { setSubmiting }) => {
+  const handleFormSubmit = async ({ images, ...values }, { setSubmiting }) => {
+    // TODO Why await?
     await ky.put(`http://localhost:3000/api/product/${id}`, {
       json: values,
     });
+
+    if (images) {
+      const formData = new FormData();
+
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
+
+      await ky.put(`http://localhost:3000/api/product/${id}/images`, {
+        body: formData,
+      });
+    }
 
     toast.success("Product updated!");
   };
@@ -54,11 +67,25 @@ const Edit = ({ product }) => {
       <h1>Edit</h1>
       <Formik
         onSubmit={handleFormSubmit}
-        initialValues={{ name, slug, description, price, isPublic }}
+        initialValues={{
+          name,
+          slug,
+          description,
+          price,
+          isPublic,
+        }}
         validationSchema={validationSchema}
       >
-        {({ errors, handleSubmit, isSubmitting, touched }) => (
-          <form onSubmit={handleSubmit}>
+        {({
+          errors,
+          handleSubmit,
+          isSubmitting,
+          touched,
+          setFieldValue,
+          setValues,
+          values,
+        }) => (
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
             <BlockField
               label="Name"
               name="name"
@@ -97,6 +124,19 @@ const Edit = ({ product }) => {
               touched={touched.isPublic}
               type="checkbox"
               className="p-3 rounded"
+            />
+            <Field
+              label="Images"
+              name="images"
+              type="file"
+              accept="image/*"
+              multiple
+              errors={errors.images}
+              touched={touched.images}
+              value={undefined}
+              onChange={(event) => {
+                setFieldValue("images", Array.from(event.target.files));
+              }}
             />
             <Button disabled={isSubmitting}>
               {isSubmitting ? "Saving changes..." : "Save changes"}

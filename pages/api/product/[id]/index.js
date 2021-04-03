@@ -1,4 +1,4 @@
-import prisma from "../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 
 const putHandler = async (req, res) => {
   const { id } = req.query;
@@ -17,6 +17,7 @@ export default async (req, res) => {
   if (methodHandlers.hasOwnProperty(req.method)) {
     await methodHandlers[req.method](req, res);
   } else {
+    console.log("Not found!");
     res.statusCode = 404;
   }
   return res.end();
