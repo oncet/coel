@@ -30,12 +30,12 @@ const Edit = ({ product }) => {
     return <p>Loading...</p>;
   }
 
-  const { id, name, slug, description, price, isPublic } = product;
+  const { id, name, slug, description, isPublic } = product;
 
-  const handleFormSubmit = async ({ images, ...values }, { setSubmiting }) => {
+  const handleFormSubmit = async ({ images, ...json }) => {
     // TODO Why await?
     await ky.put(`http://localhost:3000/api/product/${id}`, {
-      json: values,
+      json,
     });
 
     if (images) {
@@ -56,7 +56,6 @@ const Edit = ({ product }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(),
     slug: Yup.string().required(),
-    price: Yup.number().positive().required(),
   });
 
   return (
@@ -71,7 +70,6 @@ const Edit = ({ product }) => {
           name,
           slug,
           description,
-          price,
           isPublic,
         }}
         validationSchema={validationSchema}
@@ -100,14 +98,6 @@ const Edit = ({ product }) => {
               errors={errors.slug}
               touched={touched.slug}
               type="text"
-              required
-            />
-            <BlockField
-              label="Price"
-              name="price"
-              errors={errors.price}
-              touched={touched.price}
-              type="number"
               required
             />
             <BlockField
