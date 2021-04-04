@@ -15,6 +15,5 @@ model Product {
   name String
   slug String
   description String
-  price Int?
   isPublic Boolean
 }
