@@ -1,4 +1,5 @@
 import { Formik } from "formik";
+import { useRef } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
@@ -14,6 +15,9 @@ export async function getServerSideProps({ params }) {
     where: {
       id: Number(params.id),
     },
+    include: {
+      images: true,
+    },
   });
 
   return {
@@ -25,14 +29,18 @@ export async function getServerSideProps({ params }) {
 
 const Edit = ({ product }) => {
   const router = useRouter();
+  const fieldRef = useRef();
 
   if (router.isFallback) {
     return <p>Loading...</p>;
   }
 
-  const { id, name, slug, description, isPublic } = product;
+  const { id, name, slug, description, isPublic, images } = product;
 
-  const handleFormSubmit = async ({ images, ...json }) => {
+  const handleFormSubmit = async ({ images, ...json }, { setFieldValue }) => {
+    // Reset "images" field
+    fieldRef.current.value = "";
+
     // TODO Why await?
     await ky.put(`http://localhost:3000/api/product/${id}`, {
       json,
@@ -127,7 +135,25 @@ const Edit = ({ product }) => {
               onChange={(event) => {
                 setFieldValue("images", Array.from(event.target.files));
               }}
+              innerRef={fieldRef}
             />
+            {images && (
+              <ul>
+                {images.map(({ id, file }) => (
+                  <li
+                    key={id}
+                    className="text-white rounded mb-3 overflow-hidden bg-center bg-cover shadow-lg"
+                    style={{
+                      backgroundImage: `url(${`/uploads/${file}`})`,
+                    }}
+                  >
+                    <div className="px-3 py-2 bg-black bg-opacity-60">
+                      {file}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
             <Button disabled={isSubmitting}>
               {isSubmitting ? "Saving changes..." : "Save changes"}
             </Button>

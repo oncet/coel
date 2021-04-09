@@ -16,4 +16,12 @@ model Product {
   slug String
   description String
   isPublic Boolean
+  images Image[]
+}
+
+model Image {
+  id Int @id @default(autoincrement())
+  file String
+  product Product @relation(fields: [productId], references: id)
+  productId Int
 }
