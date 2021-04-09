@@ -1,7 +1,7 @@
 import nc from "next-connect";
 import multer from "multer";
 
-// import prisma from "../../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 
 var storage = multer.diskStorage({
   destination: "public/uploads",
@@ -20,13 +20,17 @@ const handler = nc();
 handler.use(uploadMiddleware);
 
 handler.put(async (req, res) => {
-  // TODO Update records on db
-  // console.log("req", req.files);
   const { id } = req.query;
-  // await prisma.product.update({
-  //   where: { id: Number(id) },
-  //   data: req.body,
-  // });
+  await prisma.product.update({
+    where: { id: Number(id) },
+    data: {
+      images: {
+        create: req.files.map(({ filename }) => ({
+          file: filename,
+        })),
+      },
+    },
+  });
   res.end();
 });
 
