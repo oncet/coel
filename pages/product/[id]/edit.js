@@ -9,6 +9,7 @@ import prisma from "../../../lib/prisma";
 import BlockField from "../../../components/block-field";
 import Field from "../../../components/field";
 import Button from "../../../components/button";
+import Images from "../../../components/images";
 
 export async function getServerSideProps({ params }) {
   const product = await prisma.product.findUnique({
@@ -138,21 +139,13 @@ const Edit = ({ product }) => {
               innerRef={fieldRef}
             />
             {images && (
-              <ul>
-                {images.map(({ id, file }) => (
-                  <li
-                    key={id}
-                    className="text-white rounded mb-3 overflow-hidden bg-center bg-cover shadow-lg"
-                    style={{
-                      backgroundImage: `url(${`/uploads/${file}`})`,
-                    }}
-                  >
-                    <div className="px-3 py-2 bg-black bg-opacity-60">
-                      {file}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <Images
+                images={images}
+                deleteCallback={(id) => {
+                  console.log("delete image", id);
+                  ky.delete(`http://localhost:3000/api/image/${id}`);
+                }}
+              />
             )}
             <Button disabled={isSubmitting}>
               {isSubmitting ? "Saving changes..." : "Save changes"}
