@@ -80,6 +80,7 @@ const Edit = ({ product }) => {
           slug,
           description,
           isPublic,
+          images,
         }}
         validationSchema={validationSchema}
       >
@@ -138,11 +139,14 @@ const Edit = ({ product }) => {
               }}
               innerRef={fieldRef}
             />
-            {images && (
+            {values.images && (
               <Images
-                images={images}
+                images={values.images}
                 deleteCallback={(id) => {
-                  console.log("delete image", id);
+                  setFieldValue(
+                    "images",
+                    values.images.filter((image) => image.id !== id)
+                  );
                   ky.delete(`http://localhost:3000/api/image/${id}`);
                 }}
               />
