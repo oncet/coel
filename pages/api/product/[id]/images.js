@@ -34,6 +34,17 @@ handler.put(async (req, res) => {
   res.end();
 });
 
+handler.get(async (req, res) => {
+  const { id } = req.query;
+  const { images } = await prisma.product.findUnique({
+    where: { id: Number(id) },
+    include: {
+      images: true,
+    },
+  });
+  res.json(images);
+});
+
 export default handler;
 
 export const config = {

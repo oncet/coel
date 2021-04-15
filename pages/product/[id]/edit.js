@@ -38,7 +38,10 @@ const Edit = ({ product }) => {
 
   const { id, name, slug, description, isPublic, images } = product;
 
-  const handleFormSubmit = async ({ images, ...json }, { setFieldValue }) => {
+  const handleFormSubmit = async (
+    { images, pendingImages, ...json },
+    { setFieldValue }
+  ) => {
     // Reset "images" field
     fieldRef.current.value = "";
 
@@ -47,16 +50,21 @@ const Edit = ({ product }) => {
       json,
     });
 
-    if (images) {
+    if (pendingImages) {
       const formData = new FormData();
 
-      images.forEach((image) => {
-        formData.append("images", image);
+      pendingImages.forEach((pendingImage) => {
+        formData.append("images", pendingImage);
       });
 
       await ky.put(`http://localhost:3000/api/product/${id}/images`, {
         body: formData,
       });
+
+      setFieldValue(
+        "images",
+        await ky.get(`http://localhost:3000/api/product/${id}/images`).json()
+      );
     }
 
     toast.success("Product updated!");
@@ -81,6 +89,7 @@ const Edit = ({ product }) => {
           description,
           isPublic,
           images,
+          pendingImages: [],
         }}
         validationSchema={validationSchema}
       >
@@ -135,7 +144,7 @@ const Edit = ({ product }) => {
               touched={touched.images}
               value={undefined}
               onChange={(event) => {
-                setFieldValue("images", Array.from(event.target.files));
+                setFieldValue("pendingImages", Array.from(event.target.files));
               }}
               innerRef={fieldRef}
             />
