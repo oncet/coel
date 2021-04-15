@@ -65,6 +65,8 @@ const Edit = ({ product }) => {
         "images",
         await ky.get(`http://localhost:3000/api/product/${id}/images`).json()
       );
+
+      setFieldValue("pendingImages", null);
     }
 
     toast.success("Product updated!");
@@ -89,7 +91,7 @@ const Edit = ({ product }) => {
           description,
           isPublic,
           images,
-          pendingImages: [],
+          pendingImages: null,
         }}
         validationSchema={validationSchema}
       >
