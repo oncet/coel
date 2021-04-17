@@ -18,11 +18,13 @@ export default function Images({ images, deleteCallback }) {
               backgroundImage: `url(${`/uploads/images/${fileName}`})`,
             }}
           >
-            <div className="px-3 py-2 bg-black bg-opacity-60 relative">
-              {originalName}
+            <div className="px-3 py-2 bg-black bg-opacity-60 flex space-x-0.5 items-center justify-between">
+              <div className="min-w-0 overflow-hidden overflow-ellipsis">
+                {originalName}
+              </div>
               <Button
                 type="button"
-                className="shadow w-auto bg-red-400 rounded-full px-2 py-2 absolute right-1.5 top-1.5"
+                className="shadow w-auto bg-red-400 rounded-full px-2 py-2"
                 onClick={() => {
                   deleteCallback(id);
                 }}

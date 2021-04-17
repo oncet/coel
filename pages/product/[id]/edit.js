@@ -17,7 +17,11 @@ export async function getServerSideProps({ params }) {
       id: Number(params.id),
     },
     include: {
-      images: true,
+      images: {
+        orderBy: {
+          id: "desc",
+        },
+      },
     },
   });
 

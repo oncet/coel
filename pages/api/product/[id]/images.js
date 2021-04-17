@@ -20,7 +20,6 @@ const handler = nc();
 handler.use(uploadMiddleware);
 
 handler.put(async (req, res) => {
-  console.log("req.files", req.files);
   const { id } = req.query;
   await prisma.product.update({
     where: { id: Number(id) },
@@ -42,7 +41,11 @@ handler.get(async (req, res) => {
   const { images } = await prisma.product.findUnique({
     where: { id: Number(id) },
     include: {
-      images: true,
+      images: {
+        orderBy: {
+          id: "desc",
+        },
+      },
     },
   });
   res.json(images);
