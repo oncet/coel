@@ -157,12 +157,13 @@ const Edit = ({ product }) => {
             {values.images && (
               <Images
                 images={values.images}
-                deleteCallback={(id) => {
+                deleteCallback={async (id) => {
                   setFieldValue(
                     "images",
                     values.images.filter((image) => image.id !== id)
                   );
-                  ky.delete(`http://localhost:3000/api/image/${id}`);
+                  await ky.delete(`http://localhost:3000/api/image/${id}`);
+                  toast.success("Image deleted!");
                 }}
               />
             )}
