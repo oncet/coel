@@ -4,7 +4,7 @@ import multer from "multer";
 import prisma from "../../../../lib/prisma";
 
 var storage = multer.diskStorage({
-  destination: "public/uploads",
+  destination: "public/uploads/images",
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, `${uniqueSuffix}-${file.originalname}`);
@@ -20,13 +20,16 @@ const handler = nc();
 handler.use(uploadMiddleware);
 
 handler.put(async (req, res) => {
+  console.log("req.files", req.files);
   const { id } = req.query;
   await prisma.product.update({
     where: { id: Number(id) },
     data: {
       images: {
-        create: req.files.map(({ filename }) => ({
-          file: filename,
+        create: req.files.map(({ originalname, filename, path }) => ({
+          originalName: originalname,
+          fileName: filename,
+          path,
         })),
       },
     },

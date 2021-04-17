@@ -1,7 +1,9 @@
 -- CreateTable
 CREATE TABLE "Image" (
     "id" SERIAL NOT NULL,
-    "file" TEXT NOT NULL,
+    "originalName" TEXT NOT NULL,
+    "fileName" TEXT NOT NULL,
+    "path" TEXT NOT NULL,
     "productId" INTEGER NOT NULL,
 
     PRIMARY KEY ("id")

@@ -6,7 +6,7 @@ export default function Images({ images, deleteCallback }) {
   return (
     <ul>
       <AnimatePresence>
-        {images.map(({ id, file }) => (
+        {images.map(({ id, originalName, fileName }) => (
           <motion.li
             key={id}
             initial={{ opacity: 0 }}
@@ -15,14 +15,14 @@ export default function Images({ images, deleteCallback }) {
             transition={{ duration: 0.25 }}
             className="text-white rounded mb-3 overflow-hidden bg-center bg-cover shadow-lg"
             style={{
-              backgroundImage: `url(${`/uploads/${file}`})`,
+              backgroundImage: `url(${`/uploads/images/${fileName}`})`,
             }}
           >
             <div className="px-3 py-2 bg-black bg-opacity-60 relative">
-              {file}
+              {originalName}
               <Button
                 type="button"
-                className="w-auto bg-red-400 rounded-full px-2 py-2 absolute right-1.5 top-1.5"
+                className="shadow w-auto bg-red-400 rounded-full px-2 py-2 absolute right-1.5 top-1.5"
                 onClick={() => {
                   deleteCallback(id);
                 }}
