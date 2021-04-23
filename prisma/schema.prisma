@@ -24,6 +24,7 @@ model Image {
   originalName String
   fileName String
   path String
+  alt String
   product Product @relation(fields: [productId], references: id)
   productId Int
 }

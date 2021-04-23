@@ -1,9 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 
 import BinIcon from "../components/icons/bin";
+import PencilIcon from "../components/icons/pencil";
 import Button from "./button";
 
-export default function Images({ images, deleteCallback }) {
+export default function Images({ images, editCallback, deleteCallback }) {
   return (
     <ul>
       <AnimatePresence>
@@ -19,19 +20,30 @@ export default function Images({ images, deleteCallback }) {
               backgroundImage: `url(${`/uploads/images/${fileName}`})`,
             }}
           >
-            <div className="px-3 py-2 bg-black bg-opacity-60 flex space-x-0.5 items-center justify-between">
+            <div className="px-3 py-2 bg-black bg-opacity-60 flex space-x-2 items-center justify-between">
               <div className="min-w-0 overflow-hidden overflow-ellipsis">
                 {originalName}
               </div>
-              <Button
-                type="button"
-                className="shadow w-auto bg-red-400 rounded-full px-2 py-2"
-                onClick={() => {
-                  deleteCallback(id);
-                }}
-              >
-                <BinIcon />
-              </Button>
+              <div className="flex space-x-2">
+                <Button
+                  type="button"
+                  className="shadow w-auto bg-indigo-400 rounded-full px-2 py-2"
+                  onClick={() => {
+                    editCallback(id);
+                  }}
+                >
+                  <PencilIcon />
+                </Button>
+                <Button
+                  type="button"
+                  className="shadow w-auto bg-red-400 rounded-full px-2 py-2"
+                  onClick={() => {
+                    deleteCallback(id);
+                  }}
+                >
+                  <BinIcon />
+                </Button>
+              </div>
             </div>
           </motion.li>
         ))}

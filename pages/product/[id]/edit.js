@@ -1,15 +1,17 @@
 import { Formik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
+import { AnimatePresence } from "framer-motion";
 import prisma from "../../../lib/prisma";
 import BlockField from "../../../components/block-field";
 import Field from "../../../components/field";
 import Button from "../../../components/button";
 import Images from "../../../components/images";
+import EditImage from "../../../components/edit-image";
 
 export async function getServerSideProps({ params }) {
   const product = await prisma.product.findUnique({
@@ -35,6 +37,8 @@ export async function getServerSideProps({ params }) {
 const Edit = ({ product }) => {
   const router = useRouter();
   const fieldRef = useRef();
+  const overlayRef = useRef();
+  const [editingImage, setEditingImage] = useState();
 
   if (router.isFallback) {
     return <p>Loading...</p>;
@@ -65,10 +69,14 @@ const Edit = ({ product }) => {
         body: formData,
       });
 
-      setFieldValue(
-        "images",
-        await ky.get(`http://localhost:3000/api/product/${id}/images`).json()
-      );
+      const updatedImages = await ky
+        .get(`http://localhost:3000/api/product/${id}/images`)
+        .json();
+
+      setFieldValue("images", updatedImages);
+
+      // TODO Update image state for overlay
+      // setImages(updatedImages);
 
       setFieldValue("pendingImages", null);
     }
@@ -97,7 +105,7 @@ const Edit = ({ product }) => {
           images,
           pendingImages: null,
         }}
-        validationSchema={validationSchema}
+        // validationSchema={validationSchema}
       >
         {({
           errors,
@@ -131,6 +139,7 @@ const Edit = ({ product }) => {
               errors={errors.description}
               touched={touched.description}
               as="textarea"
+              required
             />
             <Field
               label="Public"
@@ -157,6 +166,9 @@ const Edit = ({ product }) => {
             {values.images && (
               <Images
                 images={values.images}
+                editCallback={(id) => {
+                  setEditingImage(id);
+                }}
                 deleteCallback={async (id) => {
                   setFieldValue(
                     "images",
@@ -173,6 +185,17 @@ const Edit = ({ product }) => {
           </form>
         )}
       </Formik>
+      <AnimatePresence>
+        {editingImage && (
+          <EditImage
+            image={images.find(({ id }) => id === editingImage)}
+            overlayRef={overlayRef}
+            closeCallback={() => {
+              setEditingImage(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

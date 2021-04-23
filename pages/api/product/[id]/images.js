@@ -29,6 +29,7 @@ handler.put(async (req, res) => {
           originalName: originalname,
           fileName: filename,
           path,
+          alt: filename,
         })),
       },
     },
