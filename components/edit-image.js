@@ -4,6 +4,7 @@ import ky from "ky";
 import { toast } from "react-toastify";
 import BlockField from "./block-field";
 import Button from "./button";
+import XIconLarge from "./icons/x-lg";
 
 export default function EditImage({ image, overlayRef, closeCallback }) {
   const { id, originalName, fileName, alt } = image;
@@ -32,20 +33,7 @@ export default function EditImage({ image, overlayRef, closeCallback }) {
         <div className="flex justify-between items-center p-2">
           <h2 className="m-0">Edit image</h2>
           <button className="inline-block w-auto" onClick={closeCallback}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6  text-black dark:text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <XIconLarge />
           </button>
         </div>
         <p className="px-2 mt-0 mb-3 break-all">{originalName}</p>
