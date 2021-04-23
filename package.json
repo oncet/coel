@@ -9,6 +9,7 @@
     "lang:extract": "formatjs extract '(components||pages)/**/*.js' --out-file lang/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "lang:compile": "formatjs compile-folder --ast lang compiled-lang",
     "db:generate": "prisma generate",
+    "db:push": "prisma db push --preview-feature",
     "db:migrate:dev": "prisma migrate dev --preview-feature"
   },
   "dependencies": {
