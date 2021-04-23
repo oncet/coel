@@ -23,8 +23,13 @@ const languages = [
 
 export default function Nav({ asPath }) {
   const { locale: currentLocale } = useRouter();
+  const [mounted, setMounted] = useState();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const listener = () => {
@@ -102,7 +107,13 @@ export default function Nav({ asPath }) {
         </li>
         <li className="flex">
           <button onClick={handleThemeToggle}>
-            {theme === "light" ? <SunIcon /> : <MoonIcon />}
+            <AnimatePresence exitBeforeEnter>
+              {!mounted || theme === "light" ? (
+                <SunIcon key="sun" className={mounted ? "" : "animate-pulse"} />
+              ) : (
+                <MoonIcon key="moon" />
+              )}
+            </AnimatePresence>
           </button>
         </li>
       </ul>
