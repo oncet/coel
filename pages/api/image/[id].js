@@ -13,14 +13,8 @@ const putHandler = async ({ query, body }, res) => {
   res.statusCode = 200;
 };
 
-const deleteHandler = async (req, res) => {
-  const { id } = req.query;
-
-  const image = await prisma.image.findUnique({
-    where: {
-      id: parseInt(id),
-    },
-  });
+const deleteHandler = async ({ query }, res) => {
+  const { id } = query;
 
   await prisma.image.delete({
     where: {
@@ -28,8 +22,9 @@ const deleteHandler = async (req, res) => {
     },
   });
 
-  // TODO Delete file too!
   res.statusCode = 200;
+
+  // TODO Delete file too!
 };
 
 const methodHandlers = {
