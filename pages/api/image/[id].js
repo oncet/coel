@@ -38,11 +38,14 @@ const methodHandlers = {
 };
 
 export default async (req, res) => {
-  if (methodHandlers[req.method]) {
-    await methodHandlers[req.method](req, res);
+  const { method } = req;
+
+  if (methodHandlers[method]) {
+    await methodHandlers[method](req, res);
   } else {
-    console.warn("Handler not found for method", req.method);
+    console.warn("Handler not found for method", method);
     res.statusCode = 404;
   }
+
   return res.end();
 };
