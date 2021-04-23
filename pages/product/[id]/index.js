@@ -31,7 +31,7 @@ const Product = ({ product }) => {
       <h1>{product.name}</h1>
       <Link href={`/product/${product.id}/edit`}>
         <a className="flex mb-3">
-          <PencilIcon />
+          <PencilIcon className="mr-2" />
           Edit
         </a>
       </Link>
