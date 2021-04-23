@@ -6,6 +6,9 @@
   h1 {
     @apply font-bold text-5xl tracking-wide mb-4;
   }
+  h2 {
+    @apply font-bold text-3xl tracking-wide mb-4;
+  }
   p {
     @apply pl-1 my-1;
   }
