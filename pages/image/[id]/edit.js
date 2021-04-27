@@ -27,8 +27,6 @@ export async function getServerSideProps({ params }) {
 const Edit = ({ image }) => {
   const { id, originalName, fileName, alt, product } = image;
 
-  console.log("product", product);
-
   const handleFormSubmit = (json) => {
     ky.put(`http://localhost:3000/api/image/${id}`, {
       json,
