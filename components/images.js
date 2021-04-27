@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 import BinIcon from "../components/icons/bin";
@@ -22,18 +23,11 @@ export default function Images({ images, editCallback, deleteCallback }) {
           >
             <div className="px-3 py-2 bg-black bg-opacity-60 flex space-x-2 items-center justify-between">
               <div className="min-w-0 overflow-hidden overflow-ellipsis">
-                {originalName}
+                <Link href={`/image/${id}/edit`}>
+                  <a>{originalName}</a>
+                </Link>
               </div>
               <div className="flex space-x-2">
-                <Button
-                  type="button"
-                  className="shadow w-auto bg-indigo-400 rounded-full px-2 py-2"
-                  onClick={() => {
-                    editCallback(id);
-                  }}
-                >
-                  <PencilIcon />
-                </Button>
                 <Button
                   type="button"
                   className="shadow w-auto bg-red-400 rounded-full px-2 py-2"

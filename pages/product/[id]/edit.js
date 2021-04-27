@@ -5,13 +5,11 @@ import { useRouter } from "next/router";
 import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
-import { AnimatePresence } from "framer-motion";
 import prisma from "../../../lib/prisma";
 import BlockField from "../../../components/block-field";
 import Field from "../../../components/field";
 import Button from "../../../components/button";
 import Images from "../../../components/images";
-import EditImage from "../../../components/edit-image";
 
 export async function getServerSideProps({ params }) {
   const product = await prisma.product.findUnique({
@@ -94,7 +92,7 @@ const Edit = ({ product }) => {
       <Head>
         <title>Edit product</title>
       </Head>
-      <h1>Edit</h1>
+      <h1>Edit product</h1>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={{
@@ -185,17 +183,6 @@ const Edit = ({ product }) => {
           </form>
         )}
       </Formik>
-      <AnimatePresence>
-        {editingImage && (
-          <EditImage
-            image={images.find(({ id }) => id === editingImage)}
-            overlayRef={overlayRef}
-            closeCallback={() => {
-              setEditingImage(false);
-            }}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 };
