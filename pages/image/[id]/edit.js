@@ -42,16 +42,16 @@ const Edit = ({ image }) => {
       <Head>
         <title>Edit image</title>
       </Head>
-      <nav>
+      <h1>Edit image</h1>
+      <nav className="mb-3">
         <ul>
           <li>
             <Link href={`/product/${product.id}/edit`}>
-              <a>View product</a>
+              <a>Edit product</a>
             </Link>
           </li>
         </ul>
       </nav>
-      <h1>Edit image</h1>
       <p className="break-all">{originalName}</p>
       <Formik
         onSubmit={handleFormSubmit}
