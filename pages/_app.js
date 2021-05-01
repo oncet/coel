@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "next-themes";
 import { IntlProvider } from "react-intl";
+import { Provider } from "next-auth/client";
 import Nav from "../components/nav";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -25,33 +26,35 @@ function MyApp({ Component, pageProps, router }) {
         locale={locale}
         messages={messages[locale]}
       >
-        <Nav asPath={asPath} />
-        <div className="container mx-auto pt-8 pb-12">
-          <motion.div
-            className="py-1 px-2"
-            key={`${route}-${locale}`}
-            initial="pageInitial"
-            animate="pageAnimate"
-            variants={{
-              pageInitial: {
-                opacity: 0,
-              },
-              pageAnimate: {
-                opacity: 1,
-              },
-            }}
-          >
-            <Component {...pageProps} />
-          </motion.div>
-          <ToastContainer
-            position="bottom-center"
-            newestOnTop
-            hideProgressBar
-            closeButton={false}
-            limit="3"
-            autoClose="3500"
-          />
-        </div>
+        <Provider session={pageProps.session}>
+          <Nav asPath={asPath} />
+          <div className="container mx-auto pt-8 pb-12">
+            <motion.div
+              className="py-1 px-2"
+              key={`${route}-${locale}`}
+              initial="pageInitial"
+              animate="pageAnimate"
+              variants={{
+                pageInitial: {
+                  opacity: 0,
+                },
+                pageAnimate: {
+                  opacity: 1,
+                },
+              }}
+            >
+              <Component {...pageProps} />
+            </motion.div>
+            <ToastContainer
+              position="bottom-center"
+              newestOnTop
+              hideProgressBar
+              closeButton={false}
+              limit="3"
+              autoClose="3500"
+            />
+          </div>
+        </Provider>
       </IntlProvider>
     </ThemeProvider>
   );
