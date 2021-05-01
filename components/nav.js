@@ -50,7 +50,7 @@ export default function Nav({ asPath }) {
   };
 
   return (
-    <nav className="flex justify-between border-b border-gray-300 dark:border-gray-700 py-1">
+    <nav className="bg-white dark:bg-gray-800 fixed left-0 right-0 flex justify-between shadow-sm dark:shadow-none border-b border-gray-200 dark:border-gray-700 py-1">
       <ul className="flex">
         <li>
           <Link href="/">

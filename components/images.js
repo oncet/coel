@@ -24,7 +24,7 @@ export default function Images({ images, editCallback, deleteCallback }) {
             <div className="px-3 py-2 bg-black bg-opacity-60 flex space-x-2 items-center justify-between">
               <div className="min-w-0 overflow-hidden overflow-ellipsis">
                 <Link href={`/image/${id}/edit`}>
-                  <a>{originalName}</a>
+                  <a className="text-blue-200">{originalName}</a>
                 </Link>
               </div>
               <div className="flex space-x-2">
