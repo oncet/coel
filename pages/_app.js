@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps, router }) {
         messages={messages[locale]}
       >
         <Nav asPath={asPath} />
-        <div className="container mx-auto">
+        <div className="container mx-auto pb-12">
           <motion.div
             className="py-1 px-2"
             key={`${route}-${locale}`}
