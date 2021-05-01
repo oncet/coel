@@ -74,6 +74,17 @@ export default function Nav({ asPath }) {
         </li>
       </ul>
       <ul className="flex items-center">
+        <li className="flex">
+          <button onClick={handleThemeToggle}>
+            <AnimatePresence exitBeforeEnter>
+              {!mounted || theme === "light" ? (
+                <SunIcon key="sun" className={mounted ? "" : "animate-pulse"} />
+              ) : (
+                <MoonIcon key="moon" />
+              )}
+            </AnimatePresence>
+          </button>
+        </li>
         <li className="relative flex">
           <button onClick={() => setDropdownVisible(true)}>
             <TranslateIcon />
@@ -105,16 +116,24 @@ export default function Nav({ asPath }) {
             )}
           </AnimatePresence>
         </li>
+
         <li className="flex">
-          <button onClick={handleThemeToggle}>
-            <AnimatePresence exitBeforeEnter>
-              {!mounted || theme === "light" ? (
-                <SunIcon key="sun" className={mounted ? "" : "animate-pulse"} />
-              ) : (
-                <MoonIcon key="moon" />
-              )}
-            </AnimatePresence>
-          </button>
+          <Link href="/login">
+            <a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </a>
+          </Link>
         </li>
       </ul>
     </nav>
