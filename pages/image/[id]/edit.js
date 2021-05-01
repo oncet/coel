@@ -27,10 +27,12 @@ export async function getServerSideProps({ params }) {
 const Edit = ({ image }) => {
   const { id, originalName, fileName, alt, product } = image;
 
-  const handleFormSubmit = (json) => {
-    ky.put(`http://localhost:3000/api/image/${id}`, {
+  const handleFormSubmit = async (json, { setSubmitting }) => {
+    await ky.put(`http://localhost:3000/api/image/${id}`, {
       json,
     });
+
+    setSubmitting(false);
 
     toast.success("Image updated!");
   };
@@ -57,7 +59,7 @@ const Edit = ({ image }) => {
           alt: alt,
         }}
       >
-        {({ handleSubmit, values }) => (
+        {({ handleSubmit, isSubmitting, values, errors, touched }) => (
           <form onSubmit={handleSubmit}>
             <div>
               <img
@@ -71,8 +73,12 @@ const Edit = ({ image }) => {
               name="alt"
               as="textarea"
               required
+              errors={errors.alt}
+              touched={touched.alt}
             />
-            <Button>Save changes</Button>
+            <Button disabled={isSubmitting}>
+              {isSubmitting ? "Saving changes..." : "Save changes"}
+            </Button>
           </form>
         )}
       </Formik>
