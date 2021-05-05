@@ -76,9 +76,9 @@ export default function Nav({ asPath }) {
       <ul className="flex items-center">
         <li className="flex">
           <button onClick={handleThemeToggle}>
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence initial={false} exitBeforeEnter>
               {!mounted || theme === "light" ? (
-                <SunIcon key="sun" className={mounted ? "" : "animate-pulse"} />
+                <SunIcon key="sun" />
               ) : (
                 <MoonIcon key="moon" />
               )}
