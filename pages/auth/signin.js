@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { getProviders, signIn, signOut, useSession } from "next-auth/client";
 import Button from "../../components/button";
 
@@ -13,6 +14,9 @@ export default function SignIn({ providers }) {
 
   return (
     <>
+      <Head>
+        <title>Login</title>
+      </Head>
       <h1>Login</h1>
       {!session &&
         Object.values(providers).map((provider) => (

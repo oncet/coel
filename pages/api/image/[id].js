@@ -36,8 +36,6 @@ const methodHandlers = {
 export default async (req, res) => {
   const session = await getSession({ req });
 
-  console.log("session", session);
-
   const { method } = req;
 
   if (!session) {

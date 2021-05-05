@@ -1,5 +1,6 @@
 import nc from "next-connect";
 import multer from "multer";
+import { getSession } from "next-auth/client";
 
 import prisma from "../../../../lib/prisma";
 
@@ -20,7 +21,14 @@ const handler = nc();
 handler.use(uploadMiddleware);
 
 handler.put(async (req, res) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    res.status(403).end();
+  }
+
   const { id } = req.query;
+
   await prisma.product.update({
     where: { id: Number(id) },
     data: {
@@ -34,11 +42,13 @@ handler.put(async (req, res) => {
       },
     },
   });
+
   res.end();
 });
 
 handler.get(async (req, res) => {
   const { id } = req.query;
+
   const { images } = await prisma.product.findUnique({
     where: { id: Number(id) },
     include: {
@@ -49,6 +59,7 @@ handler.get(async (req, res) => {
       },
     },
   });
+
   res.json(images);
 });
 
