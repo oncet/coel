@@ -28,13 +28,17 @@ const Edit = ({ image }) => {
   const { id, originalName, fileName, alt, product } = image;
 
   const handleFormSubmit = async (json, { setSubmitting }) => {
-    await ky.put(`http://localhost:3000/api/image/${id}`, {
-      json,
-    });
+    try {
+      await ky.put(`http://localhost:3000/api/image/${id}`, {
+        json,
+      });
+
+      toast.success("Image updated!");
+    } catch (error) {
+      toast.error(`Image update failed: ${error.message}`);
+    }
 
     setSubmitting(false);
-
-    toast.success("Image updated!");
   };
 
   return (

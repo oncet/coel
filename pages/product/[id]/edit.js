@@ -48,38 +48,41 @@ const Edit = ({ product }) => {
     { images, pendingImages, ...json },
     { setFieldValue }
   ) => {
-    // Reset "images" field
-    fieldRef.current.value = "";
-
-    // TODO Why await?
-    await ky.put(`http://localhost:3000/api/product/${id}`, {
-      json,
-    });
-
-    if (pendingImages) {
-      const formData = new FormData();
-
-      pendingImages.forEach((pendingImage) => {
-        formData.append("images", pendingImage);
+    try {
+      await ky.put(`http://localhost:3000/api/product/${id}`, {
+        json,
       });
 
-      await ky.put(`http://localhost:3000/api/product/${id}/images`, {
-        body: formData,
-      });
+      // Reset "images" field
+      fieldRef.current.value = "";
 
-      const updatedImages = await ky
-        .get(`http://localhost:3000/api/product/${id}/images`)
-        .json();
+      if (pendingImages) {
+        const formData = new FormData();
 
-      setFieldValue("images", updatedImages);
+        pendingImages.forEach((pendingImage) => {
+          formData.append("images", pendingImage);
+        });
 
-      // TODO Update image state for overlay
-      // setImages(updatedImages);
+        await ky.put(`http://localhost:3000/api/product/${id}/images`, {
+          body: formData,
+        });
 
-      setFieldValue("pendingImages", null);
+        const updatedImages = await ky
+          .get(`http://localhost:3000/api/product/${id}/images`)
+          .json();
+
+        setFieldValue("images", updatedImages);
+
+        // TODO Update image state for overlay
+        // setImages(updatedImages);
+
+        setFieldValue("pendingImages", null);
+      }
+
+      toast.success("Product updated!");
+    } catch (error) {
+      toast.error(`Product update failed: ${error.message}`);
     }
-
-    toast.success("Product updated!");
   };
 
   const validationSchema = Yup.object().shape({
