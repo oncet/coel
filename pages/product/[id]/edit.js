@@ -1,17 +1,27 @@
 import { Formik } from "formik";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
+import { useSession, getSession } from "next-auth/client";
 import prisma from "../../../lib/prisma";
 import BlockField from "../../../components/block-field";
 import Field from "../../../components/field";
 import Button from "../../../components/button";
 import Images from "../../../components/images";
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, ...context }) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      props: {},
+    };
+  }
+
   const product = await prisma.product.findUnique({
     where: {
       id: Number(params.id),
@@ -33,11 +43,30 @@ export async function getServerSideProps({ params }) {
 }
 
 const Edit = ({ product }) => {
+  const [session] = useSession();
   const router = useRouter();
   const fieldRef = useRef();
-  const overlayRef = useRef();
-  const [editingImage, setEditingImage] = useState();
 
+  if (!session) {
+    return (
+      <>
+        <Head>
+          <title>Edit product</title>
+        </Head>
+        <h1>Edit product</h1>
+        <p>
+          <Link
+            href={`/auth/signin?redirect=http://localhost:3000/product/${router.query.id}/edit`}
+          >
+            <a>Sign in</a>
+          </Link>{" "}
+          to view this page.
+        </p>
+      </>
+    );
+  }
+
+  // TODO Still need this?
   if (router.isFallback) {
     return <p>Loading...</p>;
   }
@@ -167,9 +196,6 @@ const Edit = ({ product }) => {
             {values.images && (
               <Images
                 images={values.images}
-                editCallback={(id) => {
-                  setEditingImage(id);
-                }}
                 deleteCallback={async (id) => {
                   setFieldValue(
                     "images",

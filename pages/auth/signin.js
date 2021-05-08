@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { getProviders, signIn, signOut, useSession } from "next-auth/client";
 import Button from "../../components/button";
 
@@ -10,18 +11,26 @@ export async function getServerSideProps() {
 }
 
 export default function SignIn({ providers }) {
-  const [session, loading] = useSession();
+  const [session] = useSession();
+
+  const { query } = useRouter();
 
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Sign in</title>
       </Head>
-      <h1>Login</h1>
+      <h1>Sign in</h1>
       {!session &&
         Object.values(providers).map((provider) => (
           <div key={provider.name}>
-            <Button onClick={() => signIn(provider.id)}>
+            <Button
+              onClick={() =>
+                signIn(provider.id, {
+                  callbackUrl: query.redirect,
+                })
+              }
+            >
               Sign in with {provider.name}
             </Button>
           </div>
@@ -29,7 +38,7 @@ export default function SignIn({ providers }) {
       {session && (
         <>
           <p className="mb-2">Hi, {session.user.name}!</p>
-          <Button onClick={signOut}>Sign out</Button>
+          <Button onClick={() => signOut()}>Sign out</Button>
         </>
       )}
     </>

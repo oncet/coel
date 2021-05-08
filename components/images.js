@@ -5,7 +5,7 @@ import BinIcon from "../components/icons/bin";
 import PencilIcon from "../components/icons/pencil";
 import Button from "./button";
 
-export default function Images({ images, editCallback, deleteCallback }) {
+export default function Images({ images, deleteCallback }) {
   return (
     <ul>
       <AnimatePresence>

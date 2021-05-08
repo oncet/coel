@@ -2,12 +2,21 @@ import Head from "next/head";
 import Link from "next/link";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
+import { useSession, getSession } from "next-auth/client";
 import ky from "ky";
 import prisma from "../../../lib/prisma";
 import BlockField from "../../../components/block-field";
 import Button from "../../../components/button";
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, ...context }) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      props: {},
+    };
+  }
+
   const image = await prisma.image.findUnique({
     where: {
       id: Number(params.id),
@@ -25,6 +34,25 @@ export async function getServerSideProps({ params }) {
 }
 
 const Edit = ({ image }) => {
+  const [session] = useSession();
+
+  if (!session) {
+    return (
+      <>
+        <Head>
+          <title>Edit image</title>
+        </Head>
+        <h1>Edit image</h1>
+        <p>
+          <Link href="/auth/signin">
+            <a>Sign in</a>
+          </Link>{" "}
+          to view this page.
+        </p>
+      </>
+    );
+  }
+
   const { id, originalName, fileName, alt, product } = image;
 
   const handleFormSubmit = async (json, { setSubmitting }) => {

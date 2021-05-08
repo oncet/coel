@@ -3,10 +3,12 @@ import prisma from "../../../../lib/prisma";
 
 const putHandler = async (req, res) => {
   const { id } = req.query;
+
   await prisma.product.update({
     where: { id: Number(id) },
     data: req.body,
   });
+
   res.statusCode = 200;
 };
 
