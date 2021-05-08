@@ -47,8 +47,6 @@ const Edit = ({ product }) => {
   const router = useRouter();
   const fieldRef = useRef();
 
-  console.log("router", router);
-
   if (!session) {
     return (
       <>
