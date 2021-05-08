@@ -88,7 +88,7 @@ const Edit = ({ image }) => {
           </li>
         </ul>
       </nav>
-      <p className="break-all">{originalName}</p>
+      <p>{originalName}</p>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={{
