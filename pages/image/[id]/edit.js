@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
 import { useSession, getSession } from "next-auth/client";
@@ -35,6 +36,7 @@ export async function getServerSideProps({ params, ...context }) {
 
 const Edit = ({ image }) => {
   const [session] = useSession();
+  const router = useRouter();
 
   if (!session) {
     return (
@@ -44,7 +46,9 @@ const Edit = ({ image }) => {
         </Head>
         <h1>Edit image</h1>
         <p>
-          <Link href="/auth/signin">
+          <Link
+            href={`/auth/signin?redirect=http://localhost:3000/image/${router.query.id}/edit`}
+          >
             <a>Sign in</a>
           </Link>{" "}
           to view this page.
