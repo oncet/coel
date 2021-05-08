@@ -18,9 +18,9 @@ export default function SignIn({ providers }) {
   return (
     <>
       <Head>
-        <title>Sign in</title>
+        <title>Authentication</title>
       </Head>
-      <h1>Sign in</h1>
+      <h1>Authentication</h1>
       {!session &&
         Object.values(providers).map((provider) => (
           <div key={provider.name}>

@@ -118,7 +118,7 @@ export default function Nav({ asPath }) {
         </li>
 
         <li className="flex">
-          <Link href="/auth/signin">
+          <Link href="/auth">
             <a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
