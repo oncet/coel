@@ -47,6 +47,8 @@ const Edit = ({ product }) => {
   const router = useRouter();
   const fieldRef = useRef();
 
+  console.log("router", router);
+
   if (!session) {
     return (
       <>
@@ -56,7 +58,7 @@ const Edit = ({ product }) => {
         <h1>Edit product</h1>
         <p>
           <Link
-            href={`/auth/signin?redirect=http://localhost:3000/product/${router.query.id}/edit`}
+            href={`/auth/signin?redirect=http://localhost:3000/${router.locale}/product/${router.query.id}/edit`}
           >
             <a>Sign in</a>
           </Link>{" "}
