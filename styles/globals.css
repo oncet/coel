@@ -4,7 +4,7 @@
 
 @layer base {
   h1 {
-    @apply font-bold text-5xl tracking-wide mb-4;
+    @apply font-bold text-4xl tracking-wide mb-3;
   }
   h2 {
     @apply font-bold text-3xl tracking-wide mb-2;
