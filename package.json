@@ -22,7 +22,7 @@
     "ky": "^0.27.0",
     "multer": "^1.4.2",
     "next": "^10.0.8",
-    "next-auth": "^3.19.3",
+    "next-auth": "^3.23.3",
     "next-connect": "^0.10.1",
     "next-themes": "^0.0.14",
     "next-transpile-modules": "^6.3.0",
