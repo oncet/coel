@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps, router }) {
       >
         <Provider session={pageProps.session}>
           <Nav asPath={asPath} />
-          <div className="container mx-auto pt-8 pb-12 break-all">
+          <div className="container mx-auto pt-8 pb-12 break-words">
             <motion.div
               className="py-1 px-2"
               key={`${route}-${locale}`}
