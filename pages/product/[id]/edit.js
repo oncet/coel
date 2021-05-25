@@ -102,9 +102,6 @@ const Edit = ({ product }) => {
 
         setFieldValue("images", updatedImages);
 
-        // TODO Update image state for overlay
-        // setImages(updatedImages);
-
         setFieldValue("pendingImages", null);
       }
 
