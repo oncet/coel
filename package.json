@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "vercel-build": "prisma migrate deploy && next build",
+    "vercel-build": "prisma migrate deploy --preview-feature && next build",
     "lang:extract": "formatjs extract '(components||pages)/**/*.js' --out-file lang/en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
     "lang:compile": "formatjs compile-folder --ast lang compiled-lang",
     "db:generate": "prisma generate",
