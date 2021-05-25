@@ -106,15 +106,15 @@ const Edit = ({ product }) => {
       }
 
       toast.success("Product updated!");
-    } catch (error) {
-      toast.error(`Product update failed: ${error.message}`);
+    } catch {
+      toast.error("Product not updated :(");
     }
   };
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required(),
-    slug: Yup.string().required(),
-  });
+  // const validationSchema = Yup.object().shape({
+  //   name: Yup.string().required(),
+  //   slug: Yup.string().required(),
+  // });
 
   return (
     <>
@@ -140,7 +140,6 @@ const Edit = ({ product }) => {
           isSubmitting,
           touched,
           setFieldValue,
-          setValues,
           values,
         }) => (
           <form onSubmit={handleSubmit} encType="multipart/form-data">
