@@ -37,7 +37,7 @@ const Add = () => {
   const handleFormSubmit = async ({ images, ...json }) => {
     try {
       const { id } = await ky
-        .post("http://localhost:3000/api/product", {
+        .post(`${process.env.NEXT_PUBLIC_URL}/api/product`, {
           json,
         })
         .json();
