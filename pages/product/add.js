@@ -24,7 +24,7 @@ const Add = () => {
         <h1>Add product</h1>
         <p>
           <Link
-            href={`/auth?redirect=http://localhost:3000/${router.locale}/product/add`}
+            href={`/auth?redirect=${process.env.NEXT_PUBLIC_URL}/${router.locale}/product/add`}
           >
             <a>Sign in</a>
           </Link>{" "}

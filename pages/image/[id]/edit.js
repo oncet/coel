@@ -47,7 +47,7 @@ const Edit = ({ image }) => {
         <h1>Edit image</h1>
         <p>
           <Link
-            href={`/auth?redirect=http://localhost:3000/${router.locale}/image/${router.query.id}/edit`}
+            href={`/auth?redirect=${process.env.NEXT_PUBLIC_URL}/${router.locale}/image/${router.query.id}/edit`}
           >
             <a>Sign in</a>
           </Link>{" "}
