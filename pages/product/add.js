@@ -52,9 +52,12 @@ const Add = () => {
         });
 
         try {
-          await ky.put(`http://localhost:3000/api/product/${id}/images`, {
-            body: formData,
-          });
+          await ky.put(
+            `${process.env.NEXT_PUBLIC_URL}/api/product/${id}/images`,
+            {
+              body: formData,
+            }
+          );
         } catch {
           toast.error("Images not added :(");
         }

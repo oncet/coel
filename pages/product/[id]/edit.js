@@ -78,7 +78,7 @@ const Edit = ({ product }) => {
     { setFieldValue }
   ) => {
     try {
-      await ky.put(`http://localhost:3000/api/product/${id}`, {
+      await ky.put(`${process.env.NEXT_PUBLIC_URL}/api/product/${id}`, {
         json,
       });
 
@@ -92,12 +92,15 @@ const Edit = ({ product }) => {
           formData.append("images", pendingImage);
         });
 
-        await ky.put(`http://localhost:3000/api/product/${id}/images`, {
-          body: formData,
-        });
+        await ky.put(
+          `${process.env.NEXT_PUBLIC_URL}/api/product/${id}/images`,
+          {
+            body: formData,
+          }
+        );
 
         const updatedImages = await ky
-          .get(`http://localhost:3000/api/product/${id}/images`)
+          .get(`${process.env.NEXT_PUBLIC_URL}/api/product/${id}/images`)
           .json();
 
         setFieldValue("images", updatedImages);
@@ -197,7 +200,9 @@ const Edit = ({ product }) => {
                     "images",
                     values.images.filter((image) => image.id !== id)
                   );
-                  await ky.delete(`http://localhost:3000/api/image/${id}`);
+                  await ky.delete(
+                    `${process.env.NEXT_PUBLIC_URL}/api/image/${id}`
+                  );
                   toast.success("Image deleted!");
                 }}
               />

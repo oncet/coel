@@ -61,7 +61,7 @@ const Edit = ({ image }) => {
 
   const handleFormSubmit = async (json, { setSubmitting }) => {
     try {
-      await ky.put(`http://localhost:3000/api/image/${id}`, {
+      await ky.put(`${process.env.NEXT_PUBLIC_URL}/api/image/${id}`, {
         json,
       });
 
