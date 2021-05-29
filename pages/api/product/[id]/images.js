@@ -18,9 +18,7 @@ const uploadMiddleware = upload.array("images");
 
 const handler = nc();
 
-handler.use(uploadMiddleware);
-
-handler.put(async (req, res) => {
+handler.put(uploadMiddleware, async (req, res) => {
   const session = await getSession({ req });
 
   if (!session) {
