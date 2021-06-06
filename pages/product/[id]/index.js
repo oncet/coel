@@ -9,6 +9,13 @@ export async function getServerSideProps({ params }) {
     where: {
       id: Number(params.id),
     },
+    include: {
+      images: {
+        orderBy: {
+          id: "desc",
+        },
+      },
+    },
   });
 
   return {
@@ -20,9 +27,11 @@ export async function getServerSideProps({ params }) {
 
 const Product = ({ product }) => {
   const router = useRouter();
+
   if (router.isFallback) {
     return <p>Loading...</p>;
   }
+
   return (
     <>
       <Head>
@@ -36,6 +45,13 @@ const Product = ({ product }) => {
         </a>
       </Link>
       <p>{product.description}</p>
+      <ul>
+        {product.images.map(({ id, alt, path }) => (
+          <li>
+            <img src={path} />
+          </li>
+        ))}
+      </ul>
     </>
   );
 };
