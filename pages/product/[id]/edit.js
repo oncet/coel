@@ -82,9 +82,6 @@ const Edit = ({ product }) => {
         json,
       });
 
-      // Reset "images" field
-      fieldRef.current.value = "";
-
       if (pendingImages) {
         const formData = new FormData();
 
@@ -107,6 +104,9 @@ const Edit = ({ product }) => {
 
         setFieldValue("pendingImages", null);
       }
+
+      // Reset "images" field
+      fieldRef.current.value = "";
 
       toast.success("Product updated!");
     } catch {
