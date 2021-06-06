@@ -2,14 +2,13 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 import BinIcon from "../components/icons/bin";
-import PencilIcon from "../components/icons/pencil";
 import Button from "./button";
 
 export default function Images({ images, deleteCallback }) {
   return (
     <ul>
       <AnimatePresence>
-        {images.map(({ id, originalName, fileName }) => (
+        {images.map(({ id, originalName, path }) => (
           <motion.li
             key={id}
             initial={{ opacity: 0 }}
@@ -18,7 +17,7 @@ export default function Images({ images, deleteCallback }) {
             transition={{ duration: 0.25 }}
             className="text-white rounded mb-3 overflow-hidden bg-center bg-cover shadow-lg"
             style={{
-              backgroundImage: `url(${`/uploads/images/${fileName}`})`,
+              backgroundImage: `url(${path})`,
             }}
           >
             <div className="px-3 py-2 bg-black bg-opacity-60 flex space-x-2 items-center justify-between">

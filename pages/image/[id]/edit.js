@@ -57,7 +57,7 @@ const Edit = ({ image }) => {
     );
   }
 
-  const { id, originalName, fileName, alt, product } = image;
+  const { id, originalName, path, alt, product } = image;
 
   const handleFormSubmit = async (json, { setSubmitting }) => {
     try {
@@ -98,11 +98,7 @@ const Edit = ({ image }) => {
         {({ handleSubmit, isSubmitting, values, errors, touched }) => (
           <form onSubmit={handleSubmit}>
             <div>
-              <img
-                src={`/uploads/images/${fileName}`}
-                className="my-2 block mx-auto"
-                alt={values.alt}
-              />
+              <img src={path} className="my-2 block mx-auto" alt={values.alt} />
             </div>
             <BlockField
               label="Alternative text"
