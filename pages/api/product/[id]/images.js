@@ -1,29 +1,45 @@
 import nc from "next-connect";
-import multer from "multer";
 import { getSession } from "next-auth/client";
+import asyncBusboy from "async-busboy";
+import cloudinary from "cloudinary";
 
 import prisma from "../../../../lib/prisma";
 
-var storage = multer.diskStorage({
-  destination: "public/uploads/images",
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
-  },
-});
-
-var upload = multer({ storage: storage });
-
-const uploadMiddleware = upload.array("images");
-
 const handler = nc();
 
-handler.put(uploadMiddleware, async (req, res) => {
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+handler.put(async (req, res) => {
+  const { files } = await asyncBusboy(req);
+
   const session = await getSession({ req });
 
   if (!session) {
-    res.status(403).end();
+    return res.status(403).end();
   }
+
+  if (!files) {
+    return res.status(400).end();
+  }
+
+  const promises = files.map(
+    (file) =>
+      new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream((result) => {
+          if (result.error) reject(result.error);
+
+          resolve(result);
+        });
+
+        file.pipe(stream);
+      })
+  );
+
+  const results = await Promise.all(promises);
 
   const { id } = req.query;
 
@@ -31,12 +47,16 @@ handler.put(uploadMiddleware, async (req, res) => {
     where: { id: Number(id) },
     data: {
       images: {
-        create: req.files.map(({ originalname, filename, path }) => ({
-          originalName: originalname,
-          fileName: filename,
-          path,
-          alt: filename,
-        })),
+        create: files.map(({ filename }, index) => {
+          const { public_id, url } = results[index];
+
+          return {
+            originalName: filename,
+            fileName: public_id,
+            path: url,
+            alt: filename,
+          };
+        }),
       },
     },
   });
