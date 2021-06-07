@@ -6,4 +6,7 @@ module.exports = withTM({
     defaultLocale: "en",
     localeDetection: false,
   },
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
 });

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import PencilIcon from "../../../components/icons/pencil";
 import prisma from "../../../lib/prisma";
@@ -46,9 +47,9 @@ const Product = ({ product }) => {
       </Link>
       <p>{product.description}</p>
       <ul>
-        {product.images.map(({ id, alt, path }) => (
+        {product.images.map(({ id, alt, path, width, height }) => (
           <li key={id}>
-            <img src={path} alt={alt} />
+            <Image src={path} alt={alt} width={width} height={height} />
           </li>
         ))}
       </ul>
