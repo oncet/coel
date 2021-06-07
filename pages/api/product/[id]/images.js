@@ -48,13 +48,15 @@ handler.put(async (req, res) => {
     data: {
       images: {
         create: files.map(({ filename }, index) => {
-          const { public_id, secure_url } = results[index];
+          const { public_id, secure_url, width, height } = results[index];
 
           return {
             originalName: filename,
             fileName: public_id,
             path: secure_url,
             alt: filename,
+            width,
+            height,
           };
         }),
       },
