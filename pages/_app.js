@@ -16,6 +16,11 @@ const messages = {
   es,
 };
 
+const contextClass = {
+  success: "bg-green-600 dark:bg-green-800",
+  error: "bg-red-600 dark:bg-red-800",
+};
+
 function MyApp({ Component, pageProps, router }) {
   const { locale, route, asPath } = router;
 
@@ -51,7 +56,7 @@ function MyApp({ Component, pageProps, router }) {
               hideProgressBar
               closeButton={false}
               limit="3"
-              autoClose="3500"
+              toastClassName={({ type }) => `${contextClass[type]} p-1 mt-px`}
             />
           </div>
         </Provider>

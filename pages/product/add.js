@@ -6,10 +6,10 @@ import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
 import { useSession, getSession } from "next-auth/client";
+import * as dayjs from "dayjs";
 import BlockField from "../../components/block-field";
 import Field from "../../components/field";
 import Button from "../../components/button";
-import Images from "../../components/images";
 
 const Add = () => {
   const [session] = useSession();
@@ -42,9 +42,7 @@ const Add = () => {
         })
         .json();
 
-      router.push(`/product/${id}`);
-
-      if (images) {
+      if (images.length) {
         const formData = new FormData();
 
         images.forEach((image) => {
@@ -62,6 +60,15 @@ const Add = () => {
           toast.error("Images not added :(");
         }
       }
+
+      toast.success(
+        <>
+          Product created!
+          <Link href={`${process.env.NEXT_PUBLIC_URL}/product/${id}`}>
+            <a className="ml-2 text-blue-200">View product</a>
+          </Link>
+        </>
+      );
     } catch {
       toast.error("Product not added :(");
     }
