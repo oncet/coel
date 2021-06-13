@@ -1,4 +1,5 @@
 import { Formik } from "formik";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -6,12 +7,15 @@ import * as Yup from "yup";
 import Head from "next/head";
 import ky from "ky";
 import { useSession, getSession } from "next-auth/client";
+import { motion, AnimatePresence } from "framer-motion";
 import * as dayjs from "dayjs";
 import BlockField from "../../components/block-field";
 import Field from "../../components/field";
 import Button from "../../components/button";
 
 const Add = () => {
+  const formRef = useRef();
+  const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
   const [session] = useSession();
   const router = useRouter();
 
@@ -67,11 +71,19 @@ const Add = () => {
           <Link href={`${process.env.NEXT_PUBLIC_URL}/product/${id}`}>
             <a className="ml-2 text-blue-200">View product</a>
           </Link>
-        </>
+        </>,
+        {
+          autoClose: false,
+        }
       );
     } catch {
       toast.error("Product not added :(");
     }
+  };
+
+  const handleFormReset = (e) => {
+    e.preventDefault();
+    setConfirmDialogVisible(true);
   };
 
   return (
@@ -90,8 +102,19 @@ const Add = () => {
           images: [],
         }}
       >
-        {({ errors, handleSubmit, isSubmitting, touched, setFieldValue }) => (
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
+        {({
+          errors,
+          isSubmitting,
+          touched,
+          handleSubmit,
+          resetForm,
+          setFieldValue,
+        }) => (
+          <form
+            onSubmit={handleSubmit}
+            ref={formRef}
+            encType="multipart/form-data"
+          >
             <BlockField
               label="Name"
               name="name"
@@ -137,9 +160,49 @@ const Add = () => {
                 setFieldValue("images", Array.from(event.target.files));
               }}
             />
-            <Button disabled={isSubmitting}>
+            <Button disabled={isSubmitting} type="submit" className="mb-2">
               {isSubmitting ? "Adding product..." : "Add product"}
             </Button>
+            <Button
+              // TODO Allow overwriting background color
+              className="bg-red-800 mb-2"
+              type="reset"
+              onClick={handleFormReset}
+            >
+              Reset form
+            </Button>
+            <AnimatePresence>
+              {confirmDialogVisible && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <Button
+                    className="mb-2 bg-red-800"
+                    onClick={() => {
+                      resetForm();
+
+                      // For image field
+                      formRef.current.reset();
+
+                      setConfirmDialogVisible(false);
+                    }}
+                  >
+                    Yes, reset all fields!
+                  </Button>
+                  <Button
+                    className="mb-2"
+                    onClick={() => {
+                      setConfirmDialogVisible(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </form>
         )}
       </Formik>
