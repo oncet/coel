@@ -25,6 +25,7 @@ export default function SignIn({ providers }) {
         Object.values(providers).map((provider) => (
           <div key={provider.name}>
             <Button
+              color="primary"
               onClick={() =>
                 signIn(provider.id, {
                   callbackUrl: query.redirect,

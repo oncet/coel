@@ -207,7 +207,7 @@ const Edit = ({ product }) => {
                 }}
               />
             )}
-            <Button disabled={isSubmitting}>
+            <Button color="primary" disabled={isSubmitting}>
               {isSubmitting ? "Saving changes..." : "Save changes"}
             </Button>
           </form>

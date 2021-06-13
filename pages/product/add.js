@@ -160,13 +160,10 @@ const Add = () => {
                 setFieldValue("images", Array.from(event.target.files));
               }}
             />
-            <Button disabled={isSubmitting} type="submit" className="mb-2">
-              {isSubmitting ? "Adding product..." : "Add product"}
-            </Button>
             <Button
-              // TODO Allow overwriting background color
-              className="bg-red-800 mb-2"
+              className="mb-2"
               type="reset"
+              color="secondary"
               onClick={handleFormReset}
             >
               Reset form
@@ -180,7 +177,8 @@ const Add = () => {
                   transition={{ duration: 0.25 }}
                 >
                   <Button
-                    className="mb-2 bg-red-800"
+                    className="mb-2"
+                    color="primary"
                     onClick={() => {
                       resetForm();
 
@@ -203,6 +201,14 @@ const Add = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              color="primary"
+              className="mb-2"
+            >
+              {isSubmitting ? "Adding product..." : "Add product"}
+            </Button>
           </form>
         )}
       </Formik>
