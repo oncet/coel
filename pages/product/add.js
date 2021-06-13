@@ -83,7 +83,7 @@ const Add = () => {
 
   const handleFormReset = (e) => {
     e.preventDefault();
-    setConfirmDialogVisible(true);
+    setConfirmDialogVisible(!confirmDialogVisible);
   };
 
   return (
@@ -171,11 +171,13 @@ const Add = () => {
             <AnimatePresence>
               {confirmDialogVisible && (
                 <motion.div
+                  className="p-2 mb-2 bg-green-300 rounded"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.25 }}
                 >
+                  <div className="text-black text-center mb-2">You sure?</div>
                   <Button
                     className="mb-2"
                     color="primary"
@@ -191,7 +193,6 @@ const Add = () => {
                     Yes, reset all fields!
                   </Button>
                   <Button
-                    className="mb-2"
                     onClick={() => {
                       setConfirmDialogVisible(false);
                     }}
@@ -201,12 +202,7 @@ const Add = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-            <Button
-              disabled={isSubmitting}
-              type="submit"
-              color="primary"
-              className="mb-2"
-            >
+            <Button disabled={isSubmitting} type="submit" color="primary">
               {isSubmitting ? "Adding product..." : "Add product"}
             </Button>
           </form>
