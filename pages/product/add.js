@@ -171,34 +171,42 @@ const Add = () => {
             <AnimatePresence>
               {confirmDialogVisible && (
                 <motion.div
-                  className="p-2 mb-2 bg-green-300 rounded"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  className="bg-gray-300 dark:bg-gray-700 rounded overflow-hidden"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{
+                    opacity: 1,
+                    height: "auto",
+                    marginBottom: "0.5rem",
+                  }}
+                  exit={{ opacity: 0, height: 0, marginBottom: "0rem" }}
                   transition={{ duration: 0.25 }}
                 >
-                  <div className="text-black text-center mb-2">You sure?</div>
-                  <Button
-                    className="mb-2"
-                    color="primary"
-                    onClick={() => {
-                      resetForm();
+                  <div className="p-2">
+                    <div className="dark:text-white text-center mb-2">
+                      You sure?
+                    </div>
+                    <Button
+                      className="mb-2"
+                      color="primary"
+                      onClick={() => {
+                        resetForm();
 
-                      // For image field
-                      formRef.current.reset();
+                        // For image field
+                        formRef.current.reset();
 
-                      setConfirmDialogVisible(false);
-                    }}
-                  >
-                    Yes, reset all fields!
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setConfirmDialogVisible(false);
-                    }}
-                  >
-                    Cancel
-                  </Button>
+                        setConfirmDialogVisible(false);
+                      }}
+                    >
+                      Yes, reset all fields!
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setConfirmDialogVisible(false);
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
